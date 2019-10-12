@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+#define fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+using namespace std;
+//using boost::multiprecision::cpp_int;
+typedef long long LL;
+typedef long double LD;
+const int inf=0x3f3f3f3f;
+const int infi=1e9+7;
+int t,n;
+bool prime[1000000];
+int main()
+{
+    fast;
+    cin>>t;
+    int cnt=0;
+    if(t>=1&&t<=1000)
+    {
+        while(t--)
+        {
+            set<int> s;
+            cnt=0;
+            cin>>n;
+            memset(prime,true,sizeof(prime));
+            for(int i=2;i<=floor(sqrt(1000000));++i)
+            {
+                if(prime[i])
+                {
+                    s.insert(i);
+                    for(int j=2*i;j<=1000000;j+=i)
+                    {
+                        prime[j]=false;
+                    }
+                }
+            }
+            for(auto it:s)
+            {
+                cout<<it<<endl;
+                ++cnt;
+                if(cnt==n)
+                break;
+            }
+        }
+    }
+}
