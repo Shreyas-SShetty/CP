@@ -1,3 +1,3 @@
-# Common-algos-
+# Code for CP problems
 Competitive programming
-Contains standard algorithms and other implementations for competitive programming
+
