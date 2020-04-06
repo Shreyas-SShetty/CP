@@ -1,0 +1,29 @@
+int KMP(string rem)
+{
+    string kmp = rem ;
+    reverse(rem.begin(),rem.end());
+    kmp = kmp + "&";
+    kmp = kmp + rem;
+ 
+    int n = kmp.length();
+    int b[n];
+    pill(b,n,0);
+    
+    for(int i=1,j=0;i<n;)
+    {
+        if(kmp[i] == kmp[j])
+        {
+            b[i] = j+1;
+            ++j;
+            ++i;
+        }
+        else if(kmp[i] != kmp[j])
+        {
+            if(j>0)
+            j = b[j-1];
+            else
+            ++i;
+        }
+    }
+    return b[n-1]; 
+}
