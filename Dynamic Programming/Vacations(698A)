@@ -1,0 +1,91 @@
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int infi=1e9+7;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+
+int a[100];
+int dp[100][3];
+int n;
+int fun(int i,int prev)
+{
+	if(i>=n)
+	return 0;
+    if(dp[i][prev] != -1)
+    	return dp[i][prev];
+    
+
+    bool vis=false;
+   // itn op1=INT_MIN,op2=INT_MIN,op3=INT_MIN,op4 = INT_MIN;
+   // int op=INT_MIN;
+    // if(a[i] == 0)
+    // 	{
+    		//int op = (fun(i+1,0));
+    int op=INT_MIN;
+    if((a[i] & 1) && (prev != 1 ))
+    	{
+    		op = max(op,fun(i+1,1)+1);
+    		vis = true;
+    	}
+    if((a[i] & 2) && (prev != 2 ))
+    	{
+    		op = max(op,fun(i+1,2)+1);
+    		vis= true;
+    	}
+    	op = max(op,fun(i+1,0));
+    // if(!vis)
+    // {
+    // 	op = max(op,fun(i+1,prev));
+    // }
+
+    //dp[i] = op;
+    return dp[i][prev] = op;
+}
+
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>n;
+    fix(dp,-1);
+    forn(i,n)cin>>a[i];
+    int curr =0;
+    cout<<(n-fun(0,0))<<"\n";
+}
+
+//Common pitfalls - Taking 1D dp array
+//Not considering rest days
