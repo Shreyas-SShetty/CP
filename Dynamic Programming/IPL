@@ -31,4 +31,6 @@ At any ith position we can
 3) Add a[i] and a[i-1] to dp[i-3].
 4)We dont go beyond it as some element must be selected in the previous three elements.
 
+Alternate soln(TOP DOWN)
+take dp[i][j] as unique dp states for each dp. i stands for index, j denotes how many consecutive elements can be still added.
 
