@@ -4,7 +4,7 @@ consecutive elements can be selected.
 Trick - Here , we cannot be ascertained that we will use a particular position or not beforehand, so we have to change our base cases in such
 a way that we include it as well, we assume that every element will be included . Ans - max(dp[n-3],dp[n-2],dp[n-1]).
 
-**Code**
+code
 
 #include<bits/stdc++.h>
 using namespace std;
