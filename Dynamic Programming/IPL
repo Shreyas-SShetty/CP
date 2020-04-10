@@ -4,7 +4,7 @@ consecutive elements can be selected.
 Trick - Here , we cannot be ascertained that we will use a particular position or not beforehand, so we have to change our base cases in such
 a way that we include it as well, we assume that every element will be included . Ans - max(dp[n-3],dp[n-2],dp[n-1]).
 
-code
+CODE-(BOTTOM UP)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -24,5 +24,11 @@ int main()
 	cout<<max(dp[n],dp[n-1],dp[n-2])<<"\n";
 }
 
-Expla
+EXPLAINATION
+At any ith position we can 
+1) Simply ignore the current element(dp[i-1])
+2) Add a[i] to dp[i-2]
+3) Add a[i] and a[i-1] to dp[i-3].
+4)We dont go beyond it as some element must be selected in the previous three elements.
+
 
