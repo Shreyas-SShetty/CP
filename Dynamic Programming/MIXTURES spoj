@@ -1,0 +1,93 @@
+Question (Refer SPOJ)
+
+CODE:
+Hint - Matrix chain multiplication
+
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+//#define        ll int 
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long lll;
+typedef long double LD;
+typedef unsigned long long int ll;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+//////////////////////////////////////////////////////////////
+ll dp[101][101];
+ll smoke[101][101];
+ll cost[101];
+int n;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>n;{
+    forn(i,n)cin>>cost[i];
+    if(n==1)
+	return cost[0];
+    fix(smoke,113);
+    for(int i=0;i<n;++i)
+    	{
+    		//dp[i][i] = cost[i];
+    		smoke[i][i] = cost[i];
+    	}
+
+    for(int l=2;l<=n;++l)
+    {
+    	for(int i=0;i<=(n-l);++i)
+    	{
+    		int j = i+l-1;
+    		ll ans=1000000000000000;
+    		for(int k=i;k<j;++k)
+    		{
+    				{
+    					if((dp[i][k]+dp[k+1][j]+smoke[i][k]*smoke[k+1][j]) < ans)
+    					{
+    						ans = dp[i][k]+dp[k+1][j]+(smoke[i][k]*smoke[k+1][j]);
+    						smoke[i][j] = (smoke[i][k] + smoke[k+1][j])%100;
+    						dp[i][j] = smoke[i][k]*smoke[k+1][j] + dp[i][k] + dp[k+1][j];
+    					}
+    				}
+    		}
+    	}
+    }
+      cout<<dp[0][n-1]<<"\n";
+  }
+}
