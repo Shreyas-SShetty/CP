@@ -1,0 +1,83 @@
+Famous question in top down manner-
+
+Code--
+
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+////////////////////////////////////////////////////////////////
+ll dp[1001][100001];
+int nums,val;
+ll size[1001];
+ll price[1001];
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+ll solve(int i,int j)
+{
+    if(i>=nums || j==0)
+        return 0;
+    if(j < 0)
+        {
+            //cout<<"beep\n";
+            return -199999;
+        }
+    if(dp[i][j] != -1)
+        return dp[i][j];
+    if((j-size[i])>=0)
+    dp[i][j] = max(max(ll(0),solve(i+1,j)) , solve(i+1,j-size[i]) + price[i]);
+    else
+    dp[i][j] = max(ll(0),solve(i+1,j));
+    return dp[i][j];
+}
+
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>nums>>val;     // nums = number of objects         val =total capacity of the sack
+    forn(i,nums)cin>>size[i];    //  weight of objects
+    forn(i,nums)cin>>price[i];   // price of objects
+    fix(dp,-1);
+    cout<<solve(0,val)<<"\n";
+}
