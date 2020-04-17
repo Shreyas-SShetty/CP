@@ -64,10 +64,10 @@ ll solve(int i,int j)
         }
     if(dp[i][j] != -1)
         return dp[i][j];
-    if((j-size[i])>=0)
-    dp[i][j] = max(max(ll(0),solve(i+1,j)) , solve(i+1,j-size[i]) + price[i]);
+    if((j-size[i])>=0) 
+    dp[i][j] = max(max(ll(0),solve(i+1,j)) , solve(i+1,j-size[i]) + price[i]);   // Either select the current item or just move forward
     else
-    dp[i][j] = max(ll(0),solve(i+1,j));
+    dp[i][j] = max(ll(0),solve(i+1,j));   
     return dp[i][j];
 }
 
