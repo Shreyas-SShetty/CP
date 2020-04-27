@@ -85,7 +85,7 @@ void Prims(int n)
         for(auto x:adj[top.second])             
         {
             if(vis[x.s] == false)
-            qq.push({x.f,x.s});                              // We push the neighbours of a vertex into the pq , similar to dfs , but as we push inside it gets internally sorted.
+            qq.push({x.f,x.s});                              // We push the neighbours of a vertex into the pq , similar to bfs , but as we push inside ,it gets internally sorted.
         }
     }
 }
