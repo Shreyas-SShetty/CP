@@ -13,6 +13,15 @@ Intuition -
 Prereq-
 1) Union find DS and path compression(TusharRoy)
 
+
+Time Complexity-
+O(ElogE) where E is the no of edges. (Sorting)
+if(E<V) then O(VlogV) is the time complexity because
+we iterate through all the edges and then finding its parent takes logV time in union and path compression method.
+
+Space Complexity-
+O(E+V) 
+
 Code --
 
 //#pragma GCC optimize "trapv"
