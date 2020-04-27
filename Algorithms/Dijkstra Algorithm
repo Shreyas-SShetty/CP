@@ -1,0 +1,20 @@
+Used in finding the shortest path from a source vertex to any other vertex of the graph 
+
+Intuition-
+Similar to Prims algorithm
+Prims Algorithm is similar to bfs except that we sort the vertices and the weights in the priority queue
+Hence we get the MSP
+In Dijkstra we do similar thing like Prims but also store the distance of all nodes from the source in a dist array.
+As we keeping pushing the nodes into the priority queue , if two same nodes are present in the priority queue , then first one to be removed is the one with minimum weight due to internal sorting.
+If we currently meet a node and if that node is not previously present in the pq(in the sense its already visited) we dont push it again because the minimum path has already been obtained for that node.
+
+Time Complexity - 
+O(Vlog(V)) .Going through and pushing all the vertices and sorting them.
+
+Space Complexity-
+O(V+E)
+
+Code-
+
+
+
