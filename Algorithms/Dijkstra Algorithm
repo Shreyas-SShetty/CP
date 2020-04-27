@@ -16,5 +16,124 @@ O(V+E)
 
 Code-
 
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+using namespace std;
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
+//using namespace __gnu_pbds;
+// find_by_order(k)  returns iterator to kth element starting from 0;
+// order_of_key(k) returns count of elements strictly smaller than k;
+// erase,insert same as normal set
+
+//#define        ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+//#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        mn(a,b,c) min(a,min(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+typedef pair<int,int> pii;
+const int N=1e5+5;
+const int mod=1e9+7;
+//mt19937 rnd(time(NULL));
+
+//////////////////////////////////////////////////////////////
+vector<vector<pii>> adj;
+vector<bool>vis;
+vector<int>dist;
+vector<int>parent;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+void Dijkstra(int n)
+{
+    dist[n] = 0;
+    multiset<pii> st;                 //multiset does the same job as a priority queue
+    st.insert({0,n});
+   /// vis[n] = true;
+    while(!st.empty())
+    {
+        pii top= *st.begin();
+        int vertex = top.second;
+        int cost = top.first;
+        st.erase(st.begin());
+        if(vis[vertex])
+            continue;
+        vis[vertex] = true;
+        for(auto x:adj[vertex])
+        {
+            if(((dist[vertex] + x.f) < dist[x.s]) && (vis[x.s]==false))    //If the (distance of the parent + edge length ) is lesser than the current distance of the node then update it.
+            {
+                dist[x.s] = dist[vertex] + x.f;
+                parent[x.s] = vertex;                 //Store its parent
+                st.insert({dist[x.s],x.s}); 
+            }
+        }
+    }
+}
+
+int32_t main()
+{
+    fast;
+    rf();
+    int n,m;
+    int a,b,cost;
+    cin>>n>>m;
+    adj = vector<vector<pii>>(n+1);
+    vis = vector<bool>(n+1,false);
+    dist = vector<int>(n+1,intmax);
+    parent = vector<int>(n+1,-1);
+    for(int i=0;i<m;++i)
+    {
+        cin>>a>>b>>cost;
+        adj[a].pb({cost,b});
+        adj[b].pb({cost,a});
+    }
+    Dijkstra(1);
+    for(int i=2;i<=n;++i)        //Outputting
+    {
+        cout<<dist[i]<<"\n";
+        cout<<"path ";
+        int j=i;
+        vector<int> vec;
+        vec.pb(i);
+        while(parent[i] != -1)
+        {
+            vec.pb(parent[i]);
+            i = parent[i];
+        }
+        reverse(vec.begin(),vec.end());
+        show(vec);
+        cout<<"\n";
+        i=j;
+    }
+}
 
 
