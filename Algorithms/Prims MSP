@@ -4,7 +4,7 @@ MSP - A spanning tree whose cost is minimum.
 Intuition
 Unlike Kruskals algorithm we keep adding vertices one by one
 So it is clear that we need to sort the cost along with one vertex.
-We can make use of a priority queue. because insertion can be done in O(logn) and insertion and deletion in O(1).
+We can make use of a priority queue. because sorting can be done in O(logn) and insertion and deletion in O(1).
 
 Time complexity-
 O(ElogV + VlogV) == O(ElogV)
