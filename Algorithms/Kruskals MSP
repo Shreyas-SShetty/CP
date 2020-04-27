@@ -1,0 +1,126 @@
+Spanning Tree - A subgraph of a graph containing n vertices and n-1 edges and containing no cycles.
+MSP - A spanning tree whose cost is minimum.
+
+Kruskal MSP -
+Intuition - 
+1)We sort the weights of the edges in non decreasing order.
+2)We maintain a parent array ,initially all nodes point towards themselves.
+3)As we iterate through the sorted edges,
+--> If the nodes have different parents, then we combine them and select one common parent(root) and add the weight of the edge to the result.
+--> If they have same parent then it means we already have the nodes under a common tree and hence continue.
+4) This always works because we are sorting in non decreasing order.
+
+Prereq-
+1) Union find DS and path compression(TusharRoy)
+
+Code --
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+using namespace std;
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
+//using namespace __gnu_pbds;
+// find_by_order(k)  returns iterator to kth element starting from 0;
+// order_of_key(k) returns count of elements strictly smaller than k;
+// erase,insert same as normal set
+
+//#define        ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        mn(a,b,c) min(a,min(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e4+5;
+const int mod=1e9+7;
+//mt19937 rnd(time(NULL));
+
+//////////////////////////////////////////////////////////////
+vector<pair<int,pii>> adj;
+vector<pair<int,int>> MSP;
+vector<int> parent;
+LL sum;
+
+
+void precompute(int n)
+{
+    for(int i=0;i<=n;++i)                //Initially all nodes points towards themselves
+        parent[i] = i; 
+}
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+int fetchparent(int node)
+{
+    while(parent[node] != node)                    // If the parent of the node doesn't point towards the node, then it means we have not reached the root, hence in the while loop we set the parent of the current node to the parent node of the original parent node.Then we move the current node to its grandparents node.
+    {
+        parent[node] = parent[parent[node]];
+        node = parent[node];
+    }
+    return node;
+}
+
+void Kruskals()
+{
+    for(auto x:adj)
+    {
+        int nodeA = fetchparent(x.s.f);            //Fetch the root of the current element.(Union DS and path compression)
+        int nodeB = fetchparent(x.s.s);
+        if(nodeA == nodeB)
+            continue;
+        sum += x.f;
+        MSP.pb({x.s.f,x.s.s});
+        parent[nodeA] = parent[nodeB];
+    }
+}
+
+int32_t main()
+{
+    fast;
+    rf();
+    int n,m;
+    cin>>n>>m;
+    adj = vector<pair<int,pii>>(m);      //Used to store the edges and their weights
+    parent = vector<int>(n+1);           // Parent array
+    precompute(n);                 
+
+    for(int i=0;i<m;++i)             
+    {
+        int a,b,cost;
+        cin>>a>>b>>cost;
+        adj[i] = {cost,{a,b}};
+    }
+    sort(adj.begin(),adj.end());
+
+    Kruskals();
+    cout<<sum<<"\n";                        // Output the minimum cost
+    for(auto x:MSP)                         // Output the edges
+        cout<<x.f<<" "<<x.s<<"\n";
+}
