@@ -8,8 +8,12 @@ In Dijkstra we do similar thing like Prims but also store the distance of all no
 As we keeping pushing the nodes into the priority queue , if two same nodes are present in the priority queue , then first one to be removed is the one with minimum weight due to internal sorting.
 If we currently meet a node and if that node is not previously present in the pq(in the sense its already visited) we dont push it again because the minimum path has already been obtained for that node.
 
+Disadvantages-
+It is similar to bfs in the sense once all the neighbours are pushed into the queue and sorted and pushed out then it assumes that adding any further weights will not change the minimal path.
+But their could be a negative edge in the next level which gives the least cost as well.
+
 Time Complexity - 
-O(Vlog(V)) .Going through and pushing all the vertices and sorting them.
+O(Elog(V)) .Going through and pushing all the vertices and sorting them.
 
 Space Complexity-
 O(V+E)
