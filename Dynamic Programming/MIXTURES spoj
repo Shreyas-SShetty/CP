@@ -62,7 +62,7 @@ int32_t main()
     forn(i,n)cin>>cost[i];
     if(n==1)
 	return cost[0];
-    fix(smoke,113);
+    
     for(int i=0;i<n;++i)
     	{
     		//dp[i][i] = cost[i];
