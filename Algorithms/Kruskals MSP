@@ -114,7 +114,7 @@ int32_t main()
 {
     fast;
     rf();
-    int n,m;
+    int n,m;                  // n -- no of vertices m-- no of edges
     cin>>n>>m;
     adj = vector<pair<int,pii>>(m);      //Used to store the edges and their weights
     parent = vector<int>(n+1);           // Parent array
