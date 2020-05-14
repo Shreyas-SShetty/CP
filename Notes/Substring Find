@@ -1,0 +1,19 @@
+Aim - Given a two strings A and B , check whether A is a substring of string B , and also return the index of first occurence of string A in 
+string B.
+STL used - strB.find(strA);
+           strA is the parameter to be found in strB.
+
+Ex  -
+
+string B="gennady korotkevich"
+string A="nnady"
+size_t found = B.find(A);
+
+//size_t is unsigned , returns -1 if string not found.
+
+if(found!=string::npos)
+cout<<found<<"\n";
+
+//found returns the position of the first occurence.
+Ans - 2;
+
