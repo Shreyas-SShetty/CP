@@ -1,0 +1,4 @@
+vector<int> Vector;
+-->Vector.erase(itr) - erases the element pointed by the iterator itr.
+-->Vector.erase(itr1,itr2) - erases the elements within the ranges of the two iterators.
+Shows undefined behaviour if iterator points out of range of elements.
