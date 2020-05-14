@@ -1,0 +1,9 @@
+string str;
+-->str.erase() - erases the entire string
+-->str.erase(pos) - erases all the characters of a string starting from position pos till the end.(0<=pos<=str.length()-1)
+-->str.erase(pos,n) - erases 'n' characters of a string starting from positon pos.(0<=pos<=str.length()-1)
+-->str.erase(iterator) - erases the character pointed by the iterator of the string.
+-->str.erase(iterator 1,iterator 2) - erases the characters within the range of the two iterators(inclusive of both ends).
+  
+ Throws out of range error if pos>= str.length()
+ 
