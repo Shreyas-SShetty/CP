@@ -1,3 +1,8 @@
+Question == find the maximum sum sub-array of the given array .
+Alternate approaches = Prefix sum computation and finding the largest subarray by running the for loop.
+
+Code--
+
 //#pragma GCC optimize "trapv"
 #include<bits/stdc++.h>
 //#include<boost/multiprecision/cpp_int.hpp>
