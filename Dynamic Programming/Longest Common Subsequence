@@ -64,16 +64,16 @@ int32_t main()
     	for(int j=1;j<two.length();++j)
     	{
     		if(one[i] == two[j])
-    			dp[i][j] = dp[i-1][j-1] +1;
+    			dp[i][j] = dp[i-1][j-1] +1;             // If the two characters of the two strings are same(i.e, one[i] == two[j]), then the current maximum is the maximum till the previous index plus one .
     		else
-    			dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
+    			dp[i][j] = max(dp[i][j-1],dp[i-1][j]);   // Else current max is equal to either (i-1,j) and (i,j-1)
     	}
     }
     
     int start = one.length()-1;
     int end = two.length()-1;
     string vec="";
-    while(start != 0 && end != 0)
+    while(start != 0 && end != 0)               // Retrace the LCS
     {
     	if((one[start] == two[end]) && (dp[start][end] = dp[start-1][end-1]+1))
     	{
