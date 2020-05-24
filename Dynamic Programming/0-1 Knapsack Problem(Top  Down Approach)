@@ -55,13 +55,15 @@ void rf()
 
 ll solve(int i,int j)
 {
-    if(i>=nums || j==0)
-        return 0;
     if(j < 0)
         {
             //cout<<"beep\n";
             return -199999;
         }
+        
+    if(i>=nums || j==0)
+        return 0;
+        
     if(dp[i][j] != -1)
         return dp[i][j];
     if((j-size[i])>=0) 
