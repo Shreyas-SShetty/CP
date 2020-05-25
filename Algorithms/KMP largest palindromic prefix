@@ -1,3 +1,4 @@
+//To find the largest palindromic prefix .
 int KMP(string rem)
 {
     string kmp = rem ;
