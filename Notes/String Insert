@@ -1,0 +1,15 @@
+Insert a character 'ch' at position 'i' (Zero Based indexing) .
+
+Method 1: Using Iterators
+          Syntax - stringname.insert(iterator,character);
+          Example - string str = "abcd";
+                    str.insert(str.begin()+2,'e');
+                    //str = abecd;
+          Exceptions - Undefined behaviour if iterator points after/before string .
+        
+Method 2: Using index
+          Syntax - stringname.insert(position,number_of_times_to_be_inserted,character);
+          Example - string str = "abcd";
+                    str.insert(1,4,'y');
+                    //str = ayyyybcd;
+          Exceptions - Undefined behaviour if index is greater than string length.
