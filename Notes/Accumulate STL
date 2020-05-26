@@ -1,0 +1,9 @@
+Let A be an array of length 'n' containing some random elements.
+We want to find the sum of first 'k' elements say,
+
+Better way to do this is to use accumulate STL,
+int sum_of_k = accumulate(A,A+k,0);
+
+Suppose we want to find the product of  the 'k' numbers,
+
+int prod = accumulate(A, A+k, 1, [](auto &x,auto &y){ return x*y;});
