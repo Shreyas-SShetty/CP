@@ -1,0 +1,14 @@
+n_th element is used to find the value at some index 'i' if the array was sorted.
+The first 'i' elements need not be  sorted.
+It  can be also used to find the median.
+Asymptotics : O(n)
+
+Example:
+
+vector<int>vec={3,1,7,2,8,4};
+    nth_element(vec.begin(),vec.begin()+3,vec.end());
+    for(auto x:vec)
+        cout<<x<<' ';
+ 
+ Output: 2 1 3 4 8 7 
+ At the fourth position '4' must be present in the sorted array . 
