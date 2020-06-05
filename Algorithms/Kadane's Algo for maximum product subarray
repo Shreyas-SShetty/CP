@@ -1,0 +1,36 @@
+
+int32_t main()
+{
+    fast;
+    //rf();
+    int n;
+    cin>>n;
+    ll a[n];
+    forn(i,n)
+    cin>>a[i];
+    ll max_till_here = 1;
+    ll min_till_here = 1;
+    ll global_max = 0;
+    for(int i=0;i<n;++i){
+    
+        if(a[i] == 0){
+            max_till_here = 1;
+            min_till_here = 1;
+        }
+        
+        else if(a[i] > 0){
+            max_till_here *= a[i];
+            min_till_here = min(min_till_here*a[i] , 1LL);
+        }
+        
+        else if(a[i] < 0){
+            ll temp = max_till_here;
+            max_till_here = max(min_till_here*a[i],1LL);
+            min_till_here = min(temp*a[i],1LL);
+        }
+        
+        global_max = max(global_max , max_till_here);
+        
+    }
+    cout<<global_max<<nl;
+}
