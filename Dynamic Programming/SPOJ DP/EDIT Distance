@@ -1,0 +1,78 @@
+Given two strings a and b , find the minimum number of moves required to make a equal to b
+Possible operations - inserting , deleting , modifying a character in string a,
+
+
+CODE:::::::
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+//////////////////////////////////////////////////////////////
+int n,m;
+string s,t;
+itn dp[2001][2001];
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+int solve(int i,int j)
+{
+    if(i==n && j==m)
+        return dp[i][j] = 0;
+    if(i==n)
+        return dp[i][j] = (m-j);
+    if(j==m)
+        return dp[i][j] = (n-i);
+    if(dp[i][j]!=-1)
+        return dp[i][j];
+    if(s[i] == t[j])
+        return dp[i][j] = solve(i+1,j+1);
+    return dp[i][j] = 1+min(solve(i+1,j+1),min(solve(i+1,j),solve(i,j+1)));
+}
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>s>>t;
+    n=s.length();
+    m=t.length();
+    fix(dp,-1);
+    cout<<solve(0,0)<<"\n";
+}
