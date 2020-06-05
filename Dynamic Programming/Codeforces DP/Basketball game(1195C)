@@ -1,0 +1,75 @@
+//Basketball game
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long LL;
+typedef long double LD;
+typedef unsigned long long int ll;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+LL a[N],b[N],dp[N][3];
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+LL fun(int i,int j,int next_index)
+{
+    if(i>j)
+    	return 0;
+    if(dp[i][next_index])
+    	return dp[i][next_index];
+    LL op1 = LLONG_MIN;
+    if(next_index==1 || next_index ==0)
+    {
+    	 op1 = max(op1,fun(i+1,j,2) + a[i]);
+    }
+    if(next_index==2 || next_index==0)
+    {
+    	 op1 = max(fun(i+1,j,1) + b[i],op1);
+    }
+    op1 = max(op1,fun(i+1,j,0) + 0);
+    //return (dp[i] = op1);---->wrong
+    return dp[i][next_index] = op1;
+}
+int32_t main()
+{
+    fast;
+    rf();
+    LL n;cin>>n;
+    forn(i,n)cin>>a[i];
+    forn(i,n)cin>>b[i]; 
+    
+    // cout<<g<<" "<<gg<<"\n";
+    LL op1 = fun(0,n-1,0);
+    LL op2 = 0;
+    cout<<max(op1,op2)<<"\n";
+}
