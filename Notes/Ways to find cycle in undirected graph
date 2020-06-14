@@ -1,0 +1,8 @@
+1) DFS - store all visited nodes in a set and if we explore the same node again , except if it is a parent , then there is a cycle.
+
+2) Union find and path compression - Assign the parents of each node to that specific node initially . Keep picking up the edges and 
+                                     merging the parents of the nodes of the edges until if we find two nodes with the same parent .
+                                   
+3) Topological Sorting
+                                     
+              
