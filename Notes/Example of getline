@@ -1,0 +1,61 @@
+Getline is used to take some characters from input string stream(like cin) and append it to some other string until some condition is met 
+such as encountering a null character etc.
+
+Ex - getline(cin,str);
+     Take the string from input stream and appends it to str.
+
+     getline(str,temp,':')
+     Appends characters from str to temp until ':' or EOF character is met.
+     
+
+Ex problem - https://leetcode.com/problems/validate-ip-address/
+
+Solution - 
+
+
+class Solution {
+public:
+    string validIPAddress(string IP) {
+        int n = IP.length();
+        istringstream give(IP);
+        int cnt=0; 
+        string temp="";
+        if(IP.find(':') == string::npos){
+        while(getline(give,temp,'.')){
+        ++cnt;
+        if(temp.size()>3 || cnt>4 || (temp.empty()) || (temp.size()>1 && temp[0]=='0')){
+        return  "Neither";
+        }
+        for(auto c:temp){
+        if(c<'0' || c>'9')
+        return "Neither";
+        }
+        int num = stoi(temp);
+        if(num<0 || num>255)
+        return "Neither";
+        }
+        if(cnt == 4 && IP.back()!='.')
+        return "IPv4";
+        return "Neither";
+        }
+        
+        else if(IP.find('.') == string::npos){
+        while(getline(give,temp,':')){
+        ++cnt;
+        if(cnt>8 || temp.empty() || temp.size()>4){
+        return "Neither";
+        }
+        for(auto x:temp){
+        if( (x>='0' && x<='9') || (x>='a' && x<= 'f') || (x>='A' && x<='F') )
+       continue; 
+       return "Neither";
+       }
+       }
+       if(cnt == 8 && IP.back()!= ':')
+       return "IPv6";
+       return "Neither";
+       }
+       return "Neither";
+    }
+};
+
