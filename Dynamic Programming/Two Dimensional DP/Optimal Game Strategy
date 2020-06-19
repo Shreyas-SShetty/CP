@@ -1,0 +1,98 @@
+There is an array of integers .
+Two players pick an element alternatively from any one end of the array. 
+Both players play optimally.
+Find the maximum amount the first player can pick.
+
+Example input:
+4
+1 2 3 4
+
+Output : 
+6
+
+Intuition: 
+This problem is not greedy if you observe it with a few other testcases . 
+We can create unique states after each move by each player .
+dp[0,n-1,1] - move by first player
+dp[1,n-1,2] or dp[0,n-2,2] - move by second player and so on.
+We can use memoization to store intermediate results.
+
+Code : 
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+//////////////////////////////////////////////////////////////
+ll dp[30][30];
+ll coins[30];
+int n;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+
+ll solve(int i,int j)
+{
+	if(i>j)
+		return 0;
+	if(dp[i][j] != -1)
+		return dp[i][j];
+	ll cnt =0;
+	cnt = max(coins[i] + min(solve(i+2,j),solve(i+1,j-1)),coins[j] + min(solve(i+1,j-1),solve(i,j-2)));
+	return dp[i][j] = cnt;
+}
+
+//max(coins[i] + min(solve(i+2,j),solve(i+1,j-1)),coins[j] + min(solve(i+1,j-1),solve(i,j-2)));
+//W.R.T the first player , at any state , we need to pick the maximum element either from the left or right end . 
+//In this soln ,we attempt to skip the states for the second player
+//By directly going to i+2 position.
+//min(solve(i+2,j),solve(i+1,j-1)) is given because the second player also picks optimally and hence he makes sure that the first 
+//player gets the minimum value possible .
+//We finally pick the maximum between the two possibilities
+
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>n;
+    forn(i,n)cin>>coins[i];
+    fix(dp,-1);
+    cout<<solve(0,n-1)<<"\n";
+}
