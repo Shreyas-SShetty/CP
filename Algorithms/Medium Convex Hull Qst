@@ -1,0 +1,224 @@
+June Long Challenge -2020 
+
+Qst - https://www.codechef.com/JUNE20B/problems/CONTAIN
+( Nice qst to start of exploring variations in Convex-Hull algorithm)
+
+Algorithm - Jarvis March 
+
+Time complexity - O( n^2 )
+
+Code - 
+
+/*------------------GZ:-)------------------*/
+//#pragma GCC optimize "trapv"
+#include<iostream>
+#include<utility>
+#include<vector>
+#include<set>
+#include<algorithm>
+//#include <boost/functional/hash.hpp>
+#include<unordered_set>
+using namespace std;
+//#include <ext/pb_ds/assoc_container.hpp>
+//#include <ext/pb_ds/tree_policy.hpp>
+//using namespace __gnu_pbds;
+//find_by_order(k)  returns iterator to kth element starting from 0;
+//order_of_key(k) returns count of elements strictly smaller than k;
+//erase,insert same as normal set
+
+//#define      ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+//#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        mn(a,b,c) min(a,min(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+#define        nl        "\n"
+#define        prt(val)  cout<<val<<"\n"
+#define        all(v)    v.begin(),v.end()
+#define        trace1(x)                cerr<<#x<<": "<<x<<endl
+#define        trace2(x, y)             cerr<<#x<<": "<<x<<" | "<<#y<<": "<<y<<endl
+#define        trace3(x, y, z)          cerr<<#x<<":" <<x<<" | "<<#y<<": "<<y<<" | "<<#z<<": "<<z<<endl
+#define        trace4(a, b, c, d)       cerr<<#a<<": "<<a<<" | "<<#b<<": "<<b<<" | "<<#c<<": "<<c<<" | "<<#d<<": "<<d<<endl
+#define        trace5(a, b, c, d, e)    cerr<<#a<<": "<<a<<" | "<<#b<<": "<<b<<" | "<<#c<<": "<<c<<" | "<<#d<<": "<<d<<" | "<<#e<< ": "<<e<<endl
+#define        trace6(a, b, c, d, e, f) cerr<<#a<<": "<<a<<" | "<<#b<<": "<<b<<" | "<<#c<<": "<<c<<" | "<<#d<<": "<<d<<" | "<<#e<< ": "<<e<<" | "<<#f<<": "<<f<<endl
+
+typedef       long long int ll;
+typedef       long double LD;
+typedef       unsigned long long int LL;
+typedef       pair<int,int> pii;
+typedef       pair<long long int,int> pli;
+typedef       pair<int,long long int> pil;
+typedef       pair<long long int,long long int> pll;
+const int N=1e5+5;
+const int mod=1e9+7;
+//mt19937 rnd(time(NULL));
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+}
+
+ll crpd(pll a,pll b,pll c){
+    //y2*x1 - y1*x2
+    ll y2 = a.s - c.s;
+    ll x2 = a.f - c.f;
+    ll y1 = a.s - b.s;
+    ll x1 = a.f - b.f;
+    ll crp = x1 * y2 - x2 * y1;
+    return crp;
+}
+
+int calcdist(pll a,pll b,pll c){
+    ll d1 = (a.f - b.f) * (a.f - b.f) + (a.s - b.s) * (a.s - b.s);
+    ll d2 = (a.f - c.f) * (a.f - c.f) + (a.s - c.s) * (a.s - c.s);
+    if(d2 >= d1)
+        return 1;
+    return 0;
+}
+
+ struct pair_hash {  // you need this in order to put pair in the set
+            size_t operator()(const pll& v) const { 
+                    return v.first * 97 + v.second; 
+                }
+        };
+
+int32_t main()
+{
+    fast;
+    //rf();
+    w(t){
+        int n,q;
+        cin>>n>>q;
+        
+        unordered_set<pll,pair_hash> mp;
+        vector<pll> a(n);
+        forn(i,n){
+            cin>>a[i].f>>a[i].s;
+            pll cache = {a[i].f,a[i].s};
+            mp.insert(cache);
+        }        
+        //sort(a.begin(),a.end(),[](auto &x,auto &y){ return x.f < y.f;});
+        vector<vector<pll>> final;
+        while(!mp.empty()){
+            pll start = {1e15,1e15};
+            for(int i=0;i<n;++i){
+                if((a[i].f < start.f) && (mp.find(a[i]) != mp.end())){
+                    start = a[i];
+                }
+                else if((a[i].f == start.f) && (mp.find(a[i]) != mp.end())){
+                    if(start.s > a[i].s){
+                        start = a[i];
+                    }
+                }
+            }
+            if(start.f == 1e15 && start.s == 1e15)
+                break;
+
+            pll curr = start;
+            vector<pll>cl;
+            vector<pll>res;
+            res.pb(curr);
+            //mp.erase(curr);
+            while(true){
+                // int gg = 1;
+                // trace1(gg);
+                pll nxt = {-1,-1};
+                int pos = -1;
+                for(int i=0;i<n;++i){
+                    if(mp.find(a[i]) != mp.end() && curr!=a[i]){
+                        nxt = a[i];
+                        pos = i;
+                        break;
+                    }
+                }
+                if(pos == -1)
+                    break;
+                for(int i=pos+1;i<n;++i){
+                    if(a[i] != curr && (mp.find(a[i]) != mp.end())){
+                        //cout<<curr.f<<" "<<curr.s<<" "<<nxt.f<<" "<<nxt.s<<" "<<a[i].f<<" "<<a[i].s<<nl;
+                        ll cross = crpd(curr,nxt,a[i]);
+                        //cout<<"cross "<<cross<<nl;
+                        if(cross > 0){
+                            nxt = a[i];
+                            cl.clear();
+                        }
+                        else if(cross == 0){
+                            int dist = calcdist(curr,nxt,a[i]);
+                            if(dist && nxt!=curr){
+                                cl.pb(nxt);
+                                //mp.erase(nxt);
+                                nxt = a[i];
+                            }
+                            else{
+                                cl.pb(a[i]);
+                            }
+                        }
+                    }
+                }
+                if(!cl.empty()){
+                    for(auto x:cl)
+                        mp.erase(x);
+                }
+                res.pb(nxt);
+                //cout<<nxt.f<<" "<<nxt.s<<nl;
+                mp.erase(nxt);
+                curr = nxt;
+                // if(t == 0)
+                //     cout<<curr.f<<" "<<curr.s<<" "<<"mamga"<<nl;
+                if(curr.f == start.f && curr.s == start.s){
+                    //cout<<"Done"<<nl;
+                    break;
+                }
+            }
+            mp.erase(start);
+            res.pop_back();
+            //cnt -= res.size();
+            final.pb(res);
+            res.clear();
+        }
+   
+        while(q--){
+            int q1,q2;
+            cin>>q1>>q2;
+            pll qt = {q1,q2};
+            pll ext = {1e11,q2};
+            int layer=0;
+            for(auto x:final){
+                vector<pll>clone = x;
+                reverse(clone.begin(),clone.end());
+                int ln = clone.size();
+                bool ans = true;
+                if(clone.empty() || ln==2)
+                    ans = false;
+                if(!clone.empty())
+                for(int i=0;i<ln;++i){
+                    int nxt = (i+1)%ln;
+                    ll ret = crpd(clone[i],clone[nxt],qt);
+                    if(ret <= 0){
+                        ans = false;
+                        break;
+                    }
+                }
+                if(ans)
+                    ++layer;
+                if(!ans)
+                    break;
+            }
+            cout<<layer<<nl;
+        }
+    }
+}
