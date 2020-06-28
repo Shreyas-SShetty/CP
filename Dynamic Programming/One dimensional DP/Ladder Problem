@@ -1,0 +1,79 @@
+Given a length of ladder as n units and k as the maximum leap [1-k] each time a person can make find out the different number of ways to reach to the top of the ladder.
+
+Code
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+int dp[100];
+itn cnt;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+int fun(int n,int k)
+{
+	// if(n<0)
+	// 	return -1e9;
+	if(n==0)
+		return 1;
+	if(dp[n])
+		return dp[n];
+	int op=0;
+	for(int i=1;i<=k;++i)
+		if((n-i)>=0)
+		op += fun(n-i,k);
+	return dp[n] = op;
+}
+
+int32_t main()
+{
+	fast;
+	rf();
+	int n,k;cin>>n>>k;
+	int garb = fun(n,k);
+	cout<<garb<<"\n";
+}
+
+
+Bottom Up approach
+
+for(int i=1;i<=n;++i)
+    	for(int j=1;j<=k;++j)
+    		if((i-j)>=0)
+    			dp[i]+=dp[i-j];
+cout<<dp[n]<<"\n";
