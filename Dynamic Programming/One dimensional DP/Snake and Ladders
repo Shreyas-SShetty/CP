@@ -1,0 +1,80 @@
+Question - Let's define a new game of snakes and ladders. There is only one dimension of n cells. Each cell either contains a snake or ladder. One can simply take a jump of not more than k cells. A person cannot step on a snake. However, s/he can jump over a snake.
+Alice is excited to play this game and is asking you to calculate the number of ways to finish the game.
+Game starts at 1st cell and ends at the nth cell. It is guaranteed that there is a ladder at the 1st cell.
+Since the number can be large, output the answer modulo (109+7).
+
+Input Format
+First line contains 2 integers N and K, denoting the number of cells and the maximum possible jump respectively. The next line contains N integers, x1, x2,…., xN, where xi is either 0 or 1. xi=0 denotes that there is a ladder in ith cell, xi=1 denotes that there is a snake in ith cell.
+
+
+Code-(Top Down)
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=1e5+5;
+const int mod=1e9+7;
+
+ll dp[1005],game[1005];
+int n,k;
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+
+ll fun(int i)
+{
+	if(game[i] == 1)
+		return 0;
+	if(dp[i] != -1)
+		return dp[i];
+	if(i==n-1)
+		return 1;
+	ll ways=0;
+	for(int j=1;j<=k;++j)
+		ways  = ((ways%mod) + (fun(i+j)%mod))%mod;
+	return dp[i] = ways;
+}
+
+int32_t main()
+{
+    fast;
+    rf();
+    cin>>n>>k;
+    fix(dp,-1);
+    forn(i,n)cin>>game[i];
+    fun(0);
+    cout<<fun(0)<<"\n";
+}
