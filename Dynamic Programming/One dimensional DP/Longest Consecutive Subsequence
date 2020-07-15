@@ -1,0 +1,35 @@
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+Your algorithm should run in O(n) complexity.
+
+Solution:: By Maps to store the numbers.
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int n = nums.size();
+        map<int,int>mp;
+        if(nums.empty())
+            return 0;
+        for(auto x:nums) mp[x]++;
+        int curr=1,global=1,prev = mp.begin()->first;
+        auto itr = mp.begin();
+        ++itr;
+        while(itr != mp.end())
+        {
+            int val = itr->first;
+            if(val == prev+1)
+            {
+                curr++;
+                global = max(global,curr);
+            }
+            else
+            {
+                curr=1;
+            }
+            prev = val;
+            ++itr;
+        }
+        return global;
+    }
+};
