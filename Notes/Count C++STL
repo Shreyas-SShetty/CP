@@ -1,0 +1,7 @@
+count is used to find the frequency of any element in an array or string.
+
+Ex 1 - arr = {1,3,4,3,3,2}
+       count(arr, arr+4, 3) returns 2.
+
+Ex 2 - string str = "rogerfederer"
+       count(str.begin(), str.end(), 'e') return 4.
