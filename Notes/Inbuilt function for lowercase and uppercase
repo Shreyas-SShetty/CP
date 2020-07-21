@@ -1,0 +1,12 @@
+To convert to lower case in c++
+
+string str;
+transform(str.begin(), str.end(), str.begin(), ::tolower);
+
+To convert to uppercase in c++
+
+string str;
+transform(str.begin(), str.end(), str.begin(), ::toupper);
+
+
+Read more at : https://www.geeksforgeeks.org/transform-c-stl-perform-operation-elements/
