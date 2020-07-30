@@ -5,7 +5,7 @@ STL used - strB.find(strA);
 
 Ex  -
 
-string B="gennady korotkevich"
+string B="gennady_korotkevich"
 string A="nnady"
 size_t found = B.find(A);
 
