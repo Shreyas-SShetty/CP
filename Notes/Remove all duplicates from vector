@@ -1,3 +1,5 @@
 vector<int> vec = {1,1,2,3,3,4,5};
 vec.erase(unique(vec.begin(), vec.end()),vec.end());
 //vec = {1,2,3,4,5}
+
+Note  - The vector has to be sorted before applying this operation.
