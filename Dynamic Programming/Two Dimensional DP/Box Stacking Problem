@@ -1,0 +1,115 @@
+Question link = https://www.geeksforgeeks.org/box-stacking-problem-dp-22/
+
+Sample Input
+2
+4
+4 6 7 1 2 3 4 5 6 10 12 32
+3
+1 2 3 4 5 6 3 4 1
+
+Sample Output
+60
+15
+
+Helpful link = https://www.youtube.com/watch?v=9mod_xRB-O0
+Code -
+
+
+//#pragma GCC optimize "trapv"
+#include<bits/stdc++.h>
+//#include<boost/multiprecision/cpp_int.hpp>
+
+
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        f first
+#define        s second
+#define        pb push_back
+#define        eb emplace_back
+#define        pii pair<int,int>
+#define        pli pair<long,int>
+#define        pil pair<int,long>
+#define        pll pair<long,long>
+#define        mp  make_pair
+#define        forn(i,n) for(int i=0;i<n;++i)
+#define        show(b) for(auto const&x: b) cout<<x<<" "
+#define        sshow(b) for(auto x:b) cout<<x<<" "
+#define        fix(b,val)   memset(b,val,sizeof(b))
+#define        pill(b,n,v)  fill(b,b+n,v)
+#define        itn          int
+#define        w(t)     int t;cin>>t;while(t--)
+#define        mx(a,b,c) max(a,max(b,c))
+#define        mn(a,b,c) min(a,min(b,c))
+#define        intmax    INT_MAX
+#define        intmin    INT_MIN
+
+using namespace std;
+//using boost::multiprecision::cpp_int;
+
+
+typedef long long ll;
+typedef long double LD;
+typedef unsigned long long int LL;
+const int N=105;
+const int mod=1e9+7;
+
+//////////////////////////////////////////////////////////////
+vector<tuple<ll,ll,ll>>vec; 
+ll parent[505];
+ll height[505];
+
+void rf()
+{
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+    #endif
+}
+int32_t main()
+{
+    fast;
+    //rf();
+    w(t)
+    {
+    	vec.clear();
+    	int n;cin>>n;
+    	///vec = vector<tuple<int,int,int>>(3*n);
+    	for(int i=0;i<n;++i)
+    	{
+    		ll a,b,c;
+    		cin>>a>>b>>c;
+    		vec.pb(make_tuple(max(a,b),min(a,b),c));
+    		vec.pb(make_tuple(max(a,c),min(a,c),b));
+    		vec.pb(make_tuple(max(b,c),min(b,c),a));
+    	}
+    	sort(vec.begin(),vec.end(),[](auto &a,auto &b){
+    		return (ll(get<0>(a))*ll(get<1>(a)))>(ll(get<0>(b))*ll(get<1>(b)));
+    	});
+    	
+    	fix(parent,0);
+    	fix(height,0);
+    	for(int i=0;i<vec.size();++i)
+    	{
+    		parent[i] = i;
+    		height[i] = get<2>(vec[i]);
+    	}
+    	//Similar to longest increasing subsequence algo
+    	for(int i=0;i<(3*n);++i)
+    	{
+    		for(int j=0;j<(3*n);++j)
+    		{
+    			if((get<0>(vec[i])<get<0>(vec[j])) && (get<1>(vec[i])<get<1>(vec[j])))
+    				{
+    					if((height[j]+get<2>(vec[i])) > height[i])
+    						parent[i] = j;
+    					height[i] = max(height[i],height[j]+get<2>(vec[i]));
+    				}
+    		}
+    	}
+    	ll Max=0;
+    	for(int i=0;i<(3*n);++i)
+    	{
+    		Max= max(Max,height[i]);
+    	}
+    	cout<<Max<<"\n";
+    }
+}
