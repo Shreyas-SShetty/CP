@@ -29,13 +29,14 @@ Soln 1-
 
 In the interview , I came up with this approach(with some hints in the second part) -
 --> Find the longest common subsequence, retrace the path in the grid to find the characters of the LCS. 
---> Using three pointer technique, obtain the answer(not hard). 
+--> Using three pointer technique, obtain the answer.
+--> But this approach is wrong because it is greedy and greedy fails for generic test cases.
 
 
-Soln 2-
- 
+Soln 2-(Backtracking)
+
  It is clear that we need to use backtracking because at any position where there is a mismatch, we can add or delete a character in the first string. 
- But DP is not easy because we need to retrace the path and not the values. 
+ 
  Time complexity will be exponential.
  Doesn't pass the last test case.
  
@@ -145,3 +146,7 @@ int main()
 	return 0;
 }
 
+
+Soln 3 - (DP)
+
+This problem is similar to edit distance problem on spoj . Retrace the path back as well from the grid.
