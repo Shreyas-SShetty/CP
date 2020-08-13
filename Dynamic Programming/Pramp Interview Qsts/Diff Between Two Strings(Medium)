@@ -28,7 +28,7 @@ Constraints:
 Soln 1- 
 
 In the interview , I came up with this approach(with some hints in the second part) -
---> Find the longest increasing subsequence, retrace the path in the grid to find the characters of the LIS. 
+--> Find the longest common subsequence, retrace the path in the grid to find the characters of the LCS. 
 --> Using three pointer technique, obtain the answer(not hard). 
 
 
