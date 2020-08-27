@@ -122,3 +122,53 @@ int32_t main()
     }
     cout<<smoke[0][n-1]<<"\n";
 }
+
+
+
+
+
+Top Down:
+
+
+ll sumGet(int i, int j)
+{
+    ll sum=0;
+    for(int k=i; k<=j; ++k)
+        sum = (sum%100 + arr[k]%100)%100;
+    return sum;
+}
+
+ll solve(int i, int j, int n)
+{
+    if(j > n || i>j)
+        return 0;
+    if(i == j)
+        return 0;
+    if(dp[i][j] != -1)
+        return dp[i][j];
+    ll ans = intmax;
+    for(int k=i; k<j; ++k)
+    {
+        ans = min(ans, solve(i,k,n) + solve(k+1,j,n) + sumGet(i,k)*sumGet(k+1,j));
+    }
+    return dp[i][j]=ans;
+}
+
+int32_t main()
+{
+    fast;
+   // rf();
+    int n;
+    while(cin>>n) {
+    arr = vector<ll>(n+1);
+    pref = vector<ll>(n+1);
+    dp = vector<vector<ll> >(n+1, vector<ll>(n+1, -1));
+    for(int i=1; i<=n; ++i)
+        cin>>arr[i];
+    pref[0] = 0;
+    pref[1] = arr[1];
+    for(int i=2; i<=n; ++i)
+        pref[i] += pref[i-1];
+    cout<<solve(1,n,n)<<nl;
+    }
+}
