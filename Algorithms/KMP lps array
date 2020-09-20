@@ -1,0 +1,30 @@
+//User function template for C++
+class Solution{
+public:		
+
+		
+	int lps(string s)
+	{
+	    int n = s.length();
+	    int prefixArray[n];
+	    memset(prefixArray, 0, sizeof(prefixArray));
+	    int i=0, j=1; 
+	    while(j<n) {
+	        if(s[i] == s[j]) {
+	            prefixArray[j] = i+1;
+	            ++j;
+	            ++i;
+	        }
+	        else {
+	            if(i==0) {
+	                prefixArray[j] = 0;
+	                ++j;
+	            }
+	            else {
+	                i = prefixArray[i-1];
+	            }
+	        }
+	    }
+	    return prefixArray[n-1];
+	}
+};
