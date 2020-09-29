@@ -1,5 +1,6 @@
 To convert string to int:
 int number = stoi(string_name);
+long long int = stoll(string_name);
 
 To convert int to string:
 string str = to_string(number);
