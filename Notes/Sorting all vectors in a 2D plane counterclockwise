@@ -44,3 +44,52 @@ int32_t main()
 	cout<<ans.first<<" "<<ans.second;
 	return 0;
 }
+
+
+
+Editorial - 
+
+Many participants stumbled on this task. Some even very experienced competitors made mistakes. Apparently, this task is carried out using atan2in long doubleg ++ (but not in Visual Studio, since in it a long double has the same size as a double - 8 bytes).
+
+I'll describe here a solution in integers, which is certainly good to understand and know.
+
+In my solutions with simple geometry, I like to use typedef pair<T,T> pt(where T is the main data type for a point / vector), simultaneously with defines X for first and Y for second.
+
+Roughly speaking, the solution plan is as follows: sort all the vectors by the polar angle, then go through all the pairs of neighboring vectors and choose the one with the minimum angle between the vectors.
+
+In order to sort something, you need to define a "less than" order function (returns true if and only if the first argument is strictly less than the second).
+
+Below we will use the pseudoscalar product of vectors ( cross(a, b) = a.X * b.Y - a.Y * b.X), which for simplicity will be called simply vector. Recall that it is equal to | a | · | b | sin ( a ,  b ) , where sin ( a ,  b )Is the sine of the oriented angle from the first vector to the second. Therefore, the cross product sign indicates "is it true that the angle from the first to the second vector is less than 180 degrees?" or (which is the same) "is it true that the shortest way to align (co-direction) the first vector with the second will move the first vector counterclockwise?" When the value is 0, it means that it doesn't matter how: that is, the vectors are either co-directional or counter-directional.
+
+Therefore, to understand whether it is true that the first vector must precede the second when sorting, it is almost always enough to look at the sign of the cross product (more than zero means "yes"). However, this will not work at the seam when going through the loop (for example, vector (1, -1) will be determined to be before vector (1, 1)). To do this, we first compare the half-planes in which they are located (for Y  = 0 , we give the positive direction of the ray Ox to the upper half-plane ). The top function determines "is it true that p lies in the upper half-plane?"
+
+bool top(pt p) {
+    return p.Y < 0 || p.Y == 0 && p.X < 0;
+}
+Therefore, the full function "less" for sorting vectors by polar angle in integers looks like this:
+
+bool polarLess(const pt& a, const pt& b) {
+    bool ta = top(a);
+    bool tb = top(b);
+    if (ta != tb)
+        return ta;
+    return cross(a, b) > 0;
+}
+Now let's solve the second subproblem - for four vectors a 1 , b 1 , a 2 and b 2, check whether it is true that the angle between a 1 and b 1 is strictly less than the angle between a 2 and b 2 .
+
+Recall that the undirected angle between the vectors a and b can be obtained as follows: imagine that we have positioned both vectors so that the vector a stands in the direction Ox (i.e., just to the right). Then it will be enough to find the polar angle for b (coordinate b . Y must be taken modulo, since the angle is not oriented). But the vector a is not directed along Ox . Let's find the length of the projection of b onto a (this is actually x in the coordinate system, which is directed the way we want) and the length of the projection of b onto a vector rotated froma 90 degrees (perpendicular) to the left. It is easy to find the length of the first projection - it is | b | · cos ( a ,  b ) , and the length of the second projection is | b | sin ( a ,  b ) . However, if we take just the dot product, we get | a | · | b | · cos ( a ,  b ) , and vector - | a | · | b | sin ( a ,  b ) .
+
+That is, the vector p  = ( dot ( a ,  b ),  cross ( a ,  b )) (where dot ( a ,  b ) is the dot product) is the vector codirectional to the vector b ' (where b ' is the result of the rotation of the vector b , if both b and a are rotated simultaneously so that a coincides with Ox ). It would be nice to make a drawing here, but not before.
+
+Thus, for example, to find the oriented angle between vectors (from  - π to π ), it is enough to take the direction of the vector p ; in other words, atan 2 ( cross ( a ,  b ),  dot ( a ,  b )) . If an undirected angle is needed, then the modulus must be taken from the vector product (which is actually the y coordinate of the vector p ).
+
+Now we will find a pair of vectors p 1 and p 2 , as described above, then we will see which of them forms a smaller polar angle. This can be done using the already familiar cross product property.
+
+Thus, the full function code "less" for the value of the angle between vectors a 1 and b 1 versus the value of the angle between vectors a 2 and b 2 looks like this:
+
+bool angleLess(const pt& a1, const pt& b1, const pt& a2, const pt& b2) {
+    pt p1(dot(a1, b1), abs(cross(a1, b1)));
+    pt p2(dot(a2, b2), abs(cross(a2, b2)));
+    return cross(p1, p2) > 0;
+}
+Asymptotics: (for sorting)
