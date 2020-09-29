@@ -1,0 +1,37 @@
+Code - 
+
+bool vis[1005][100005];
+bool dp[1005][100005];
+
+bool checkIfPossible(int i, int n, int tgt, int* a,bool ins){
+    if(tgt == 0 && ins)
+        return true;
+    if(i >= n)
+        return false;
+    if(vis[i][tgt] == true)
+        return dp[i][tgt];
+
+    vis[i][tgt] = true;
+    bool ans = false;
+    if(a[i] <= tgt){
+        ans = ans | checkIfPossible(i+1,n,tgt-a[i],a,true);
+    }
+    ans = ans | checkIfPossible(i+1,n,tgt,a,ins);
+    return dp[i][tgt] = ans;
+}
+
+int32_t main()
+{
+    fast;
+    //rf();
+    int n,tgt;
+    cin>>n>>tgt;
+    int a[n];
+    forn(i,n)cin>>a[i];
+    fix(dp,0);  // memset
+    fix(vis,0);
+    if(checkIfPossible(0,n,tgt,a,0))
+        cout<<"Yes\n";
+    else
+        cout<<"No\n";
+}
