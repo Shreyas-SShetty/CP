@@ -1,4 +1,4 @@
-Code - 
+Code (top down) - 
 
 bool vis[1005][100005];
 bool dp[1005][100005];
@@ -35,3 +35,19 @@ int32_t main()
     else
         cout<<"No\n";
 }
+
+
+Code - (bottom up) 
+
+	ll dp[tot + 1] = {0};
+	dp[0] = 1;
+	for (ll i = 0; i < n; i++) {
+		for (ll j = tot; j >= 0; j--) {
+			if (j + b[i] <= tot) {
+				dp[j + b[i]] |= dp[j];
+			}
+		}
+	}
+	
+	cout << (dp[tot] ? "YES\n" : "NO\n");
+
