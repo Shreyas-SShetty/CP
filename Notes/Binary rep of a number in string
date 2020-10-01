@@ -1,0 +1,12 @@
+string itob(ll n) {
+    string ans;
+    while(n>0) {
+        char rem = n%2? '1' : '0';
+        ans += string(1, rem);
+        //ans.pb(rem);
+        n /= 2;
+    }
+    reverse(all(ans));
+    //cout<<ans<<nl;
+    return ans;
+}
