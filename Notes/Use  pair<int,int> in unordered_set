@@ -6,7 +6,7 @@ unordered_set<pair<int, int>, pair_hash>st;
 Function : 
 
 struct pair_hash {  // you need this in order to put pair in the set
-            size_t operator()(const pll& v) const { 
+            size_t operator()(const pair<int, int>& v) const { 
                     return v.first * 97 + v.second; 
                 }
         };
