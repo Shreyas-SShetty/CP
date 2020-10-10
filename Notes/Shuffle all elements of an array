@@ -1,0 +1,9 @@
+random_shuffle(arr.begin(), arr.end())
+
+OR 
+
+int calc(int val) {
+return rand() % val; 
+}
+
+random_shuffle(arr.begin(), arr.end(), calc) ;
