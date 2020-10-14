@@ -1,0 +1,67 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    
+    ListNode* merge(ListNode* one, ListNode* two) {
+        ListNode* answer = new ListNode(0);
+        ListNode* hold = answer;
+        while(one && two) {
+            if(one->val <= two->val) {
+                answer->next = one;
+                answer = answer->next;
+                one = one->next;
+            }
+            else {
+                answer->next = two;
+                answer = answer->next;
+                two = two->next;
+            }
+        }
+        
+        while(one) {
+            answer->next = one;
+            answer = answer->next;
+            one = one->next;
+        }
+        
+        while(two) {
+            answer->next = two;
+            answer = answer->next;
+            two = two->next;
+        }
+        return hold->next;
+    }
+    
+    int findLength(ListNode* head) {
+        int length = 0;
+        while(head) {
+            ++length;
+            head = head->next;
+        }
+        return length-1;
+    }
+    
+    ListNode* sortList(ListNode* head) {
+        if (!head || !head->next)
+            return head;
+        int len = findLength(head);
+        int mid = len / 2;
+        ListNode* traverse = head;
+        while(mid --) {
+            traverse = traverse->next;
+        }
+        //pass traverse->next to function call
+        ListNode* hold = traverse ? traverse->next : NULL;
+        traverse->next = NULL;
+        return merge(sortList(head), sortList(hold));
+    }
+};
