@@ -1,5 +1,7 @@
 Input - std::vector<int> vec1{1,2,3,4,5,6,7,8,9};
 
+int rotL = 3;
+
 std::rotate(vec1.begin(), vec1.begin()+rotL, vec1.end()); 
 
 Output - Old vector : 1 2 3 4 5 6 7 8 9
