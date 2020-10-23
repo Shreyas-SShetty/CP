@@ -144,3 +144,16 @@ int32_t main()
         solve();
     }
 }
+
+
+Another template
+
+while( l < h ) {
+        if( check(mid, a, n, k) )
+            h = mid - 1 ;
+        else
+            l = mid;
+        mid = (l + h ) /2;
+    }
+    
+    No need of outer check function
