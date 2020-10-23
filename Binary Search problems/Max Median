@@ -148,6 +148,11 @@ int32_t main()
 
 Another template
 
+
+The point is that if some value of mid is more than k then , any value greater than or equal to it will also be invalid, hence 'h' can be reduced by 1. 
+But if mid is less than k , then the answer may be mid as well because (mid+1) could be greater than k rendering invalid. 
+Catch - mid = (l + h + 1) / 2; to round off to next integer. 
+
 while( l < h ) {
         if( check(mid, a, n, k) )
             h = mid - 1 ;
