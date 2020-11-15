@@ -1,0 +1,153 @@
+Problem - https://www.spoj.com/problems/PALIN/
+
+Code - 
+
+bool inc(string& str, int idx, int n) {
+    int carry = 0;
+    int tot = str[idx] - '0' + 1;
+    while(idx >= 0) {
+        tot = str[idx] - '0' + 1;
+        if(tot != 10) {
+            str[idx] = tot + '0';
+            return 0;
+        }
+        str[idx] = '0';
+        --idx;
+    }
+    str.insert(str.begin(), '1');
+    return 1;
+}
+
+bool isPalindrome(string& str, int n) {
+    for(int i = 0, j = n-1; i <= j; ++i, --j) {
+        if(str[i] != str[j])
+            return 0;
+    }
+    return 1;
+}
+
+bool allNine (string& str, int n) {
+    bool ans = 1;
+    for(auto x: str) {
+        ans &= (x == '9');
+    }
+    return ans;
+}
+
+void solve() {
+    string str;
+    cin >> str;
+    if(str == "0") {
+        cout << 1 << nl;
+        return;
+    }
+    reverse(all(str));
+    while(str.back() == '0')
+        str.pop_back();
+    reverse(all(str));
+   // cout << "str = " << str << nl;
+    int n = str.length();
+    if(isPalindrome(str, n)) {
+        if(n&1) {
+            if(allNine(str, n)) {
+                cout << 1;
+                if(n > 1) {
+                    cout << string(n-1, '0');
+                }
+                cout << 1 << nl;
+            }
+            else {
+                int l = n/2 ;
+                int h = n/2 ;
+                while(l>=0 && h<n) {
+                    if(str[l] != '9') {
+                        str[l] ++;
+                        if(l != h)
+                        str[h] ++;
+                        break;
+                    }
+                    else {
+                        str[l] = '0';
+                        str[h] = '0';
+                    }
+                    --l;
+                    ++h;
+                }
+                cout << str << nl;
+            }
+        }
+        else {
+            if(allNine(str, n)) {
+                cout << 1;
+                if(n > 1)
+                cout << string(n-1, '0');
+                cout << 1 << nl;
+            }
+            else {
+                int l = n/2 - 1;
+                int h = n/2;
+                while(l>=0 && h<n) {
+                    if(str[l] != '9') {
+                        str[l] ++;
+                        str[h] ++;
+                        break;
+                    }
+                    else {
+                        str[l] = '0';
+                        str[h] = '0';
+                    }
+                    --l;
+                    ++h;
+                }
+                cout << str << nl;
+            }
+        }
+        return;
+    }
+    bool isGreater = 0;
+    int l = 0, h = n - 1;
+    while(l < h) {
+        isGreater |= (str[l] < str[h]);
+        ++l , --h;
+    }
+    if(!isGreater) {
+        l = 0, h = n -1;
+        while(l < h) {
+            str[h] = str[l];
+            ++l , --h; 
+        }
+        cout << str << nl;
+        return;
+    }
+
+   if(n%2 == 0) {
+     if(str[n/2-1] <= str[n/2]) {
+        inc(str, n/2-1, n);
+     }
+     else {
+        inc(str, n/2, n);
+     }
+   }
+   else
+    inc(str, n/2, n);
+     l = 0, h =n-1;
+    while(l < h) {
+        str[h] = str[l];
+        ++l; 
+        --h;
+    }
+    cout << str << nl;
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    w(t) 
+    {
+        solve();
+    }
+}
