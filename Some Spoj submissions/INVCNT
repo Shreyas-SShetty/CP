@@ -1,0 +1,68 @@
+Qst - https://www.spoj.com/problems/INVCNT/
+
+
+Code - 
+
+ll getSum(int val, int n) {
+    ll tot = 0;
+    while(val > 0) {
+        tot += bit[val];
+        //Going to its parent
+        //Keep only the rightmost set bit
+        val -= (val & (-val));
+        //-val = two's complement
+        //AND them
+        //same as  val & (val-1)
+        // if val = 10010
+        // from 10000 it will store next two number's sum + its parents' sum
+    }
+    return tot;
+}
+
+void doUpdate(int val, int n) {
+    while(val <= n) {
+        bit[val] += 1;
+        val += (val & (-val));
+    }
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    a = b = vt<ll> (n+1);
+    b[n] = 1e9;
+    for(int i = 0; i < n; ++i) {
+        cin >> a[i];
+        b[i] = a[i];
+    }
+    sort(all(b));
+    // Sort b, then for each element in a , 
+    // find its position in 'b'. 
+    // Then replace a[i] with pos
+    for(int i = 0; i < n; ++i) {
+        int pos = lower_bound(all(b), a[i]) - b.begin();
+        ++pos;
+        a[i] = pos;
+    }
+    bit = vt<ll> (n+1, 0);
+    ll ans = 0;
+    //for current a[i], find number of elements in [i+1, n-1] smaller than curr.
+    for(int i = n-1; i >= 0; --i) {
+        ans += getSum(a[i], n);
+        doUpdate(a[i], n);
+    }
+    cout << ans << nl;
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    w(t) 
+    {
+        solve();
+    }
+}
