@@ -1,0 +1,108 @@
+Qst  - https://www.spoj.com/problems/GSS1/
+
+Idea - max subarray in a range . Using segment trees we can get it but there's a catch. If a suffix of one part and prefix of another forms the max subarray ? 
+       So each node in the tree should hold prefix, suffix, sum, and max values posssible from that node. 
+       
+       max prefix =  max( pref(1), sum(1) + pref(2) )
+       max suffix =  max( suf(2), sum(2) + suf(1))
+       max sum = max( maxsum(1), maxsum(2), suf(1) + pref(1) )
+
+                            [ ............ ]
+                           /                \
+                          /                  \
+                (1)  [ ......(Ans)]       [(Ans)..... ]  (2)
+   
+   
+ Code - 
+ 
+ #include<bits/stdc++.h>
+using namespace std;
+ 
+//#define      ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
+#define        fast ios::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+#define        w(t)     int t;cin>>t;while(t--)
+#define        nl        "\n"
+#define        vt        vector
+ 
+typedef       long long int ll;
+
+struct SegTree {
+    ll pre, suf, sum, maX;
+    SegTree() {
+        pre = -1e9;
+        suf = -1e9;
+        sum = -1e9;
+        maX = -1e9;
+    }
+};
+
+/*------Global--------*/
+vt<ll> a;
+vt<SegTree> st;
+/*-----Functions------*/
+
+SegTree combineThem(SegTree v1, SegTree v2) {
+    SegTree temp;
+    temp.pre = max(v1.pre, v1.sum + v2.pre);
+    temp.suf = max(v2.suf, v2.sum + v1.suf);
+    temp.sum = v1.sum  + v2.sum;
+    temp.maX = max(v1.maX, max(v2.maX, v1.suf + v2.pre));
+    return temp;
+}
+
+SegTree rangeMaxQuery(int l, int h, int ql, int qh, int pos, int n) {
+    SegTree dummy;
+    if(l > h)
+        return dummy;
+
+    if(qh < l || ql > h)
+        return dummy;
+
+    if(ql <= l && qh >= h)
+        return st[pos];
+
+    int m = l + (h-l)/2;
+    if(qh <= m)
+        return rangeMaxQuery(l, m, ql, qh, 2*pos+1, n);
+    if(ql >= m+1)
+        return rangeMaxQuery(m+1, h, ql, qh, 2*pos+2, n);
+    auto v1 = rangeMaxQuery(l, m, ql, qh, 2*pos+1, n);
+    auto v2 = rangeMaxQuery(m+1, h, ql, qh, 2*pos+2, n);
+    return combineThem(v1, v2);
+}
+ 
+void constructSegTree(int l, int h, int pos, int n) {
+    if(l > h)
+        return;
+    if(l == h) {
+        st[pos].pre = a[l];
+        st[pos].suf = a[l];
+        st[pos].sum = a[l];
+        st[pos].maX = a[l];
+        return;
+    }
+    int m = l + (h-l)/2;
+    constructSegTree(l, m, 2*pos+1, n);
+    constructSegTree(m+1, h, 2*pos+2, n);
+    st[pos].pre = max(st[2*pos+1].pre, st[2*pos+1].sum + st[2*pos+2].pre);
+    st[pos].suf = max(st[2*pos+2].suf, st[2*pos+2].sum + st[2*pos+1].suf);
+    st[pos].sum = st[2*pos+1].sum + st[2*pos+2].sum;
+    st[pos].maX = max(st[2*pos+1].maX, max(st[2*pos+2].maX, (st[2*pos+1].suf + st[2*pos+2].pre)));
+}
+ 
+void solve() {
+    int n;
+    cin >> n;
+    a = vt<ll> (n);
+    for(auto &it: a)
+        cin >> it;
+    st = vt<SegTree> (4*n+100);
+    constructSegTree(0, n-1, 0, n);
+    w(q) {
+        int l, h;
+        cin >> l >> h;
+        --l;
+        --h;
+        cout << rangeMaxQuery(0, n-1, l, h, 0, n).maX << nl;
+    }
+}
