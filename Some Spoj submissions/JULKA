@@ -1,0 +1,92 @@
+Qst -https://www.spoj.com/problems/JULKA/
+
+Debugging in process
+
+
+Code - 
+
+#include<bits/stdc++.h>
+using namespace std;
+ 
+string add(string& a, string& b) {
+    int n = a.length();
+    int carry = 0;
+    int cur = 0;
+    string res;
+    for(int i = n-1; i >= 0; --i) {
+        cur = (a[i]-'0' + b[i]-'0' + carry);
+        carry = cur / 10;
+        cur %= 10;
+        res.push_back(cur + '0');
+      //  cout << cur << " " << carry << "mm\n";
+    }
+    if(carry) {
+        res.push_back(carry + '0');
+    }
+    reverse(res.begin(), res.end());
+   // cout << "add " << res << "\n";
+    return res;
+}
+ 
+string sub(string& a, string& b) {
+    int n = a.length();
+    int prev = -1;
+    int cur = 0;
+    int bcur ;
+    string res;
+    for(int i = n-1; i >= 0; --i) {
+        prev != -1 ? cur = a[i] - '0' - 1 : cur = a[i] - '0';
+        bcur = b[i] - '0';
+        if(cur < bcur) {
+            cur += 10;
+            prev = 1;
+        }
+        res.push_back(cur - bcur + '0');
+    }
+    reverse(res.begin(), res.end());
+   /// cout << "sub " << res << "\n";
+    return res;
+}
+ 
+string divbtwo(string& str) {
+    bool carry = 0;
+    int n = str.length();
+    int cur;
+    for(int i = 0; i < n; ++i) {
+        cur = str[i]-'0';
+        if(carry) {
+            cur += 10;
+        }
+        str[i] = (cur/2 + '0');
+        cur&1 ? carry = 1 : carry = 0;
+    }
+    reverse(str.begin(), str.end());
+    while(str.back() == '0') {
+        str.pop_back();
+    }
+    reverse(str.begin(), str.end());
+    if(str.empty())
+        str = "0";
+    return str;
+}
+ 
+int main() {
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif
+    for(int i = 0; i < 6; ++i) {
+        string a, b;
+        cin >> a >> b;
+        int na = a.length();
+        int nb = b.length();
+        int diff = na - nb;
+        reverse(b.begin(), b.end());
+        b = b + string(diff, '0');
+        reverse(b.begin(), b.end());
+        string addn = add(a, b);
+        string subt = sub(a, b);
+        cout << divbtwo(addn) << "\n";
+        cout << divbtwo(subt) << "\n";
+    }
+} 
