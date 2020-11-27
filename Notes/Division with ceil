@@ -1,3 +1,9 @@
-for dividing with ceil value to be kept , use ceil_div function 
+for dividing with ceil value to be kept , use
 
+int64_t ceil_div(int64_t a, int64_t b) {
+    return (a + b - 1) / b;
+}
+
+int main() {
 int64_t trades = ceil_div(K * Y + K - 1, X - 1);   // k*y+k-1 / x-1
+}
