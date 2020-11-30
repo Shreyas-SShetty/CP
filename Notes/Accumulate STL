@@ -3,6 +3,8 @@ We want to find the sum of first 'k' elements say,
 
 Better way to do this is to use accumulate STL,
 int sum_of_k = accumulate(A,A+k,0);
+if long long int
+accumulate(A, A+k, OLL)
 
 Suppose we want to find the product of  the 'k' numbers,
 
