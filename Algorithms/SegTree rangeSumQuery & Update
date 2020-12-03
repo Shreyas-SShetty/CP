@@ -1,0 +1,87 @@
+General template for range sum update and query
+
+// 0, n-1, l, r, val, n, pos
+void update(int l, int r, int ul, int ur, ll val, int n, int pos) {
+    if(lazy[pos] != 0) {
+        segmentTree[pos] += (lazy[pos] * (r - l + 1));
+        if(l != r) {
+        lazy[2*pos+1] += lazy[pos];
+        lazy[2*pos+2] += lazy[pos];
+        }
+        lazy[pos] = 0;
+    }
+    if(l > r || ur < l || ul > r) {
+        return;
+    }
+    if(l >= ul && r <= ur) {
+        segmentTree[pos] += (val * (r - l + 1));
+        if(l != r) {
+        lazy[2*pos+1] += val;
+        lazy[2*pos+2] += val;
+        }
+        return;
+    }
+    int mid = (l + r) >> 1;
+    update(l, mid, ul, ur, val, n, 2*pos+1);
+    update(mid+1, r, ul, ur, val, n, 2*pos+2);
+    segmentTree[pos] = segmentTree[2*pos+1] + segmentTree[2*pos+2];
+    //segmentTree[pos] = getSum(0, n-1, l, mid, n, 0) + getSum()
+}
+ 
+ll getSum(int l ,int r, int ul, int ur, int n, int pos) {
+    if(lazy[pos] != 0) {
+        //cout<<"hh\n";
+        segmentTree[pos] += (lazy[pos] * (r - l + 1));
+        if(l != r) {
+        lazy[2*pos+1] += lazy[pos];
+        lazy[2*pos+2] += lazy[pos];
+        }
+        lazy[pos] = 0;
+    }
+    if(l > r || ur < l || ul > r) {
+        return 0;
+    }
+    if(ul <= l && r <= ur) {
+        return segmentTree[pos];
+    }
+    int mid = (l + r) >> 1;
+    return getSum(l, mid, ul, ur, n, 2*pos+1) + 
+           getSum(mid+1, r, ul, ur, n, 2*pos+2);
+}
+ 
+void solve() {
+    int n, c;
+    cin >> n >> c;
+    segmentTree = vt<ll> (4*n+100,0);
+    lazy = vt<ll> (4*n+100,0);
+    //build(0, n-1, 0);
+    forn(i,c) {
+        int type;
+        cin >> type;
+        if(type == 0) {
+            ll l, r, val;
+            cin >> l >> r >> val;
+            --l, --r;
+            update(0, n-1, l, r, val, n, 0);
+        }
+        else {
+            ll l, r;
+            cin >> l >> r;
+            --l, --r;
+            cout << getSum(0, n-1, l, r, n, 0) << nl;
+        }
+    }
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+ 
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    w(t) 
+    {
+        solve();
+    }
+}  
