@@ -1,0 +1,53 @@
+Problem - https://www.spoj.com/problems/ZCR/
+
+Code -
+
+double fun(int i, int curk, int n, int k) {
+    if(i == n) {
+        if(curk == k) {
+            return 1;
+        }
+        return 0;
+    }
+    if(curk > k) {
+        return 0;
+    }
+    if(dp[i][curk] != -1)
+        return dp[i][k];
+    dp[i][curk] = 0;
+    dp[i][curk] = fun(i+1, curk, n, k) * (double)(1-a[i]);
+    dp[i][curk] += (fun(i+1, curk+1, n, k) * a[i]);
+    return dp[i][curk];
+}
+
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    a = vt<double> (n);
+    for(auto &it: a) {
+        cin >> it;
+    }
+    if(k == 0) {
+        double ans = 1;
+        forn(i,n) {
+            ans *= (1-a[i]);
+        }
+        cout << fixed << setprecision(17) << ans << nl;
+        return;
+    }
+    dp = vt<vt<double> >(n, vt<double> (k,-1));
+    cout << fixed << setprecision(17) << fun(0, 0, n, k) << nl;
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    w(t) 
+    {
+        solve();
+    }
+}
