@@ -1,0 +1,52 @@
+// This soln is only a right approach...doesn't pass the system tests due to high constraints in original problem.
+
+vt<ll> vals;
+int dp[N][2][2][100];
+
+ll fun(int i, bool inZone, bool notStart, int n, int m) {
+    if(i == n) {
+        return 0;
+    }
+    if(dp[i][inZone][notStart][m] != -1) {
+        return dp[i][inZone][notStart][m];
+    }
+    ll op1 = 0;
+    if(inZone == 0 && notStart == 1) {
+        op1 = fun(i+1, 0, 1, n, m);
+        if(m >= vals[i])
+        op1 = max(op1, fun(i+1, 1, 0, n, m-vals[i]) + vals[i]);
+    }
+    else if(inZone == 1 && notStart == 0) {
+        if(m >= vals[i])
+        op1 = max(op1, fun(i+1, 1, 0, n, m-vals[i]) + vals[i]);
+        op1 = max(op1, fun(i+1, 0, 0, n, m));
+    }
+    else if(inZone == 0 && notStart == 0){
+        op1 = fun(i+1, 0, 0, n, m);
+    }
+    return dp[i][inZone][notStart][m] = op1;
+}
+
+void solve() {
+    ll n, m;
+    cin >> n >> m;
+    vals = vt<ll> (n);
+    forn(i,n) {
+        cin >> vals[i];
+    }
+    fix(dp, -1);
+    cout << fun(0, 0, 1, n, m) << nl;
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    //w(t) 
+    {
+        solve();
+    }
+}
