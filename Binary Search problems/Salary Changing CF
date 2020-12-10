@@ -1,0 +1,69 @@
+Problems - https://codeforces.com/contest/1251/problem/D
+
+Code - 
+
+bool check(ll m, ll n, ll sal) {
+    vt<ll> diffs;
+    ll exc = 0;
+    ll cost = 0;
+    for(auto x: a) {
+        if(m >= x.f && m <= x.s) {
+            diffs.pb(m - x.f);
+            cost += x.f;
+        }
+        else if(m < x.f) {
+            ++exc;
+            cost += x.f;
+        }
+        else {
+            cost += x.f;
+        }
+    }
+    if(exc >= (n/2 + 1)) {
+        return 1;
+    }
+    sort(all(diffs));
+    int req = (n/2 + 1) - exc;
+    int sz = diffs.size();
+    if(sz < req) {
+        return 0;
+    }  
+    for(int i = 0; i < req; ++i) {
+        cost += diffs[i];
+    }
+    return (cost <= sal);
+}
+
+void solve() {
+    ll n, sal;
+    cin >> n >> sal;
+    a = vt<pll>(n);
+    for(auto& it : a) {
+        cin >> it.f >> it.s;
+    }
+    ll l = 1;
+    ll h = 1e10;
+    while(l < h) {
+        ll m = (h + l + 1) / 2;
+        if(!check(m, n, sal)) {
+            h = m - 1;
+        }
+        else {
+            l = m;
+        }
+    }
+    cout << l << nl;
+}
+
+//Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    w(t) 
+    {
+        solve();
+    }
+}
