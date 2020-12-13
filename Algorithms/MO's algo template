@@ -1,0 +1,6 @@
+   while (curL < queries[i].l) remove(curL++);
+    while (curL > queries[i].l) add(--curL);
+    while (curR < queries[i].r) add(++curR);
+    while (curR > queries[i].r) remove(curR--);
+    
+    R A A R
