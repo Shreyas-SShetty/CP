@@ -39,6 +39,7 @@ void solve() {
     // Sort b, then for each element in a , 
     // find its position in 'b'. 
     // Then replace a[i] with pos
+    // Also called as coordinate compression.
     for(int i = 0; i < n; ++i) {
         int pos = lower_bound(all(b), a[i]) - b.begin();
         ++pos;
