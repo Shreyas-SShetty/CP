@@ -1,0 +1,65 @@
+Print all permuatations of string
+
+Time complexity : O(N! * N)
+
+Code - 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+void permute(int n, int level, int* count, char* result,
+             string str)
+{
+    //If the result array is filled completely, then 
+    //output the result array.
+    if(level == n)     
+    {
+        for(int i = 0; i < n; ++i)
+        {
+            cout<<result[i];
+        }
+        cout<<"\n";
+        return;
+    }
+    
+    //Iterate through the string
+    for(int i = 0; i < n; ++i)
+    {
+        if(count[str[i]-'a'] == 0)
+            continue;
+
+        //Assign the character at the i-th index
+        //to the 'level'-th index of the result array.
+        result[level] = str[i];
+        
+        //Decrease the count of the inserted character.
+        count[str[i]-'a']--;
+        
+        //Go into next level of recursion.
+        permute(n, level+1, count, result, str);
+        
+        //Backtracking.
+        count[str[i]-'a']++;
+    }
+}
+
+int main()
+{
+    string str = "abc";       
+    int n = str.length();   
+     
+    //Output array.
+    char result[n]; 
+    
+    // Store the frequency of the characters.       
+    int count[26] = {0};        
+
+    for(int i = 0; i < n; ++i)
+    {
+        count[str[i]-'a']++;
+    }
+    
+    // First index to be filled is 0.
+    permute(n, 0, count, result, str);
+}
