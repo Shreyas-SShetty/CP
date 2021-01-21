@@ -1,0 +1,61 @@
+Qst - https://www.codechef.com/problems/WIPL
+
+Code -
+
+
+int go(int i, int h, int actualH, int n, int k, int moves) {
+    if(i == n) {
+        int rem = pref[n-1] - actualH;
+        if(h >= k and rem >= k) {
+            return moves;
+        }
+        return INT_MAX;
+    }
+    if(i > 0) {
+        int rem = pref[i-1] - actualH;
+        if(h >= k and rem >= k) return moves;
+    }
+    if(dp[h][i] != -1) {
+        return dp[h][i];
+    }
+    int ans = INT_MAX;
+    if(h < k) {
+        ans = min(ans, go(i+1, (h + a[i] >= k ? k : h + a[i]), actualH + a[i], n, k, moves + 1));
+    }
+    ans = min(ans, go(i+1, h, actualH, n, k, moves+1));
+    return dp[h][i] = ans;
+}
+
+void solve() {
+    int n, k;
+    cin >> n >> k;
+
+    a = vt<int>(n);
+    read(a);
+    sort(all(a));
+    reverse(all(a));
+
+    pref = vt<int>(n);
+    pref[0] = a[0];
+    for(int i = 1; i < n; ++i) {
+        pref[i] = pref[i-1] + a[i];
+    }
+
+    fix(dp,-1);
+
+    int res = go(0, 0, 0, n, k, 0);
+    cout << (res == INT_MAX ? -1 : res) << nl;
+}
+
+// Thought  abt edge cases (n == 1??????????????)
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    //rf();
+    w(t) 
+    {
+        solve();
+    }
+}
