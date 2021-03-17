@@ -1,0 +1,19 @@
+Qst link - https://atcoder.jp/contests/abc194/tasks/abc194_d
+
+Idea - At each step, the probabilities are independent, so if at a step the number of connected vertices are 's', then probability of choosing a different vertex is ncn-1 / ncn . 
+
+
+Code - 
+
+void solve() {
+    int n;
+    cin >> n;
+    LD ans = 0;
+    for(LD i = 1; i < n; ++i) {
+        ans += (1.00 / i);
+    }
+    ans *= n;
+    cout << fixed << setprecision(17) << ans << nl;
+}
+
+LD - long double
