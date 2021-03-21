@@ -1,0 +1,10 @@
+set<int> st;
+st.insert(1);
+...
+
+
+st.erase(st.rbegin()) does not work on reverse iterators
+
+instead use 
+
+st.erase(prev(st.end())
