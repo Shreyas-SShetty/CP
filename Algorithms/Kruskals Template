@@ -1,0 +1,33 @@
+class Kruskals {
+private:
+    vt<int> parent;
+    ll COST;
+    vt<pair<int, int> > MSP;
+public:
+    Kruskals(){}
+    Kruskals(int n) {
+        parent = vt<int> (n+1);
+        for(int i = 0; i <= n; ++i) {
+            parent[i] = i;
+        }
+        COST = 0;
+    }
+    int find_parent(int node) {
+        while(parent[node] != node) {
+            parent[node] = parent[parent[node]];
+            node = parent[node];
+        }
+        return node;
+    }
+    bool join(int v1, int v2, ll edge_length) {
+        int p1 = find_parent(v1);
+        int p2 = find_parent(v2);
+        if(p1 != p2) {
+            COST += edge_length;
+            parent[p1] = parent[p2];
+            MSP.pb({v1, v2});
+            return 1;
+        }
+        return 0;
+    }
+};
