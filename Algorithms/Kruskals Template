@@ -31,3 +31,10 @@ public:
         return 0;
     }
 };
+
+
+To use - 
+
+Kruskals msp(n);
+msp.join(...)
+etc
