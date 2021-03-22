@@ -1,12 +1,12 @@
 class Fentree {
 private:
-    vt<int> bit;
+    vt<ll> bit;
 public:
     Fentree(){}
     Fentree(int n) {
-        bit = vt<int> (n+100, 0);
+        bit = vt<ll> (n+100, 0);
     }
-    void update(int pos, int val) {
+    void update(int pos, ll val) {
         for(int i = pos; i < bit.size(); i += (i & (-i))) {
             bit[i] += val;
         }
