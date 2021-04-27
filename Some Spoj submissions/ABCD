@@ -1,0 +1,31 @@
+problem - https://www.spoj.com/problems/ABCD/
+
+idea - think of it as 2*2 box n times arranged . Each box having all four chars
+
+code - 
+
+void solve() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    map<string, string> mp;
+    mp["AB"] = "CD";
+    mp["AC"] = "BD";
+    mp["AD"] = "BC";
+    mp["BC"] = "AD";
+    mp["BD"] = "AC";
+    mp["CD"] = "AB";
+    string ans;
+    for(int i = 0; i < (2*n); i += 2) {
+        string temp = s.substr(i, 2);
+        sort(all(temp));
+        ans += mp[temp];
+    }
+    for(int i = 2; i < int(ans.size()); i += 2) {
+        if(ans[i] == ans[i-1]) {
+            swap(ans[i], ans[i+1]);
+        }
+    }
+    cout << ans << nl;
+}
