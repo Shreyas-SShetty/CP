@@ -1,0 +1,63 @@
+Qst - https://atcoder.jp/contests/abc201/tasks/abc201_d
+
+Idea - Normal 2D DP but make sure to check whose turn it is and what that person's preferences are to maxmize his score and accordingly give conditions.
+
+Code - https://atcoder.jp/contests/abc201/submissions/22644374
+
+int f(int i, int j, int turn, int n, int m) {
+    if(i == n-1 and j == m-1)
+        return 0;
+    int& val = dp[i][j];
+    if(vis[i][j] == 1)
+        return val;
+    vis[i][j] = 1;
+    if(turn) {
+        // from opponent's perspective obj is to minimize the ans of the first player.
+        val = 1e9;
+        if((i+1) < n)
+            val = min(val, f(i+1, j, turn^1, n, m) + (s[i+1][j] == '+' ? -1 : 1));
+        if((j+1) < m)
+            val = min(val, f(i, j+1, turn^1, n, m) + (s[i][j+1] == '+' ? -1 : 1));
+    }
+    else {
+        val = -1e9;
+        // from the first players perspective obj is to maximize his score.
+        if((i+1) < n)
+            val = max(val, f(i+1, j, turn^1, n, m) + (s[i+1][j] == '+' ? 1 : -1));
+        if((j+1) < m)
+            val = max(val, f(i, j+1, turn^1, n, m) + (s[i][j+1] == '+' ? 1 : -1));
+    }
+    return val;
+}
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    for(int i = 0; i < 2005; ++i)
+        for(int j = 0; j < 2005; ++j)
+                dp[i][j] = 1e9;
+    memset(vis, 0, sizeof vis);
+    s = vt<string>(n);
+    for(int i = 0; i < n; ++i)
+        cin >> s[i];
+    int res = f(0, 0, 0, n, m);
+    if(res > 0)
+        cout << "Takahashi\n";
+    else if(res < 0)
+        cout << "Aoki\n";
+    else
+        cout << "Draw\n";
+}
+
+int32_t main()
+{
+    fast;
+    //cin.exceptions(cin.failbit);
+    rf();
+    int t = 1;
+    // cin >> t;
+    while(t--)
+    {
+        solve();
+    }
+}
