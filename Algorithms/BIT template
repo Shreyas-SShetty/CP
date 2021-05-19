@@ -11,8 +11,8 @@ public:
             bit[i] += val;
         }
     }
-    int query(int pos) {
-        int smallerOrEq = 0;
+    ll query(int pos) {
+        ll smallerOrEq = 0;
         for(int i = pos; i > 0; i -= (i & (-i))) {
             smallerOrEq += bit[i];
         }
