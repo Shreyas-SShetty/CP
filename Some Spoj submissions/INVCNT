@@ -19,10 +19,10 @@ ll getSum(int val, int n) {
     return tot;
 }
 
-void doUpdate(int val, int n) {
-    while(val <= n) {
-        bit[val] += 1;
-        val += (val & (-val));
+void doUpdate(int idx, int n) {
+    while(idx <= n) {
+        bit[idx] += 1;
+        idx += (idx & (-idx));
     }
 }
 
