@@ -1,0 +1,33 @@
+https://leetcode.com/contest/biweekly-contest-53/problems/minimum-xor-sum-of-two-arrays/
+
+Idea - state is dp[i][elements of b already processed till now]. For second state use bitmask.
+
+Code - 
+
+class Solution {
+public:
+    int dp[14][(1<<14)+1];
+    
+    int bestArrangement(int i, int a, int b, int mask, vector<int>& nums1, vector<int>& nums2) {
+        if(i == a)
+            return 0;
+        int& val = dp[i][mask];
+        if(val != -1)
+            return val;
+        val = 1e9;
+        for(int j = 0; j < b; ++j) {
+            if(!(mask & (1 << j))) {
+                val = min(val, (nums1[i] ^ nums2[j]) + bestArrangement(i+1, a, b, mask | (1 << j), nums1, nums2));
+            }
+        }
+        return val;
+    }
+    
+    int minimumXORSum(vector<int>& nums1, vector<int>& nums2) {
+        // dp state is [i][b elements already processed]
+        memset(dp, -1, sizeof dp);
+        int a = nums1.size();
+        int b = nums2.size();
+        return bestArrangement(0, a, b, 0, nums1, nums2);
+    }
+};
