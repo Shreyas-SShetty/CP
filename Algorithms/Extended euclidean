@@ -1,0 +1,24 @@
+1
+ax + by = c  
+2
+bx1 + (a%b)*y1 = c
+bx1 + (a - b(a/b))*y1 = c
+ay1 + b(x1 - (a*y1)/b)) = c
+
+therefore, x = y1 and y = x1 - (a/b) * y1
+
+
+
+ll ext_euclidean(ll& x, ll& y, ll a, ll b, ll c) {
+    //a > b
+    if(b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    ll x1, y1;
+    ll gcd = f(x1, y1, b, a%b, c);
+    x = y1;
+    y = x1 - (a/b) * y1;
+    return gcd;
+}
