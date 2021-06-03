@@ -1,0 +1,40 @@
+1) When l = mid and h = mid
+
+    ll low = -1, high = 1e9;
+    while(low+1 < high) {
+        ll mid = low + (high - low)/2;
+        if(ok(mid, n, k))
+            high = mid;
+        else
+            low = mid;
+    }
+    cout << high << endl;
+    
+    
+2) when l = mid and h = mid-1
+
+    ll l = 0;
+    ll h = a[n-1];
+    ll mid;
+    while(l < h) {
+        mid = (l + h + 1)/2;
+        if(check(mid, cw, n))
+            l = mid;
+        else
+            h = mid - 1;
+    }
+    cout<<l<<nl;
+    
+    
+3) when l = mid+1 and h = mid
+
+
+    ll mid = (l+h)/2;
+    while( l < h ) {
+        if( check(mid, a, n, k) )
+            h = mid ;
+        else
+            l = mid + 1;
+        mid = (l + h) /2;
+    }
+    cout<<l<<nl;
