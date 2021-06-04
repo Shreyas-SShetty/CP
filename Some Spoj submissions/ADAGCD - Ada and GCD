@@ -1,0 +1,71 @@
+Problem : https://www.spoj.com/problems/ADAGCD/
+
+Idea : Use some optimization techniques like sieve to find out the minimum factor of a number. Also use map instead of array for avoiding TLE.
+
+Code : https://ideone.com/KCuJNJ
+
+Logic : 
+
+void preprocess() {
+    minfactor = vt<ll>(N);
+    iota(minfactor.begin(), minfactor.end(), 0);
+    for(ll i = 2; i * i < N; ++i) {
+        if(minfactor[i] == i) {
+            for(ll j = i*i; j < N; j += i) {
+                minfactor[j] = i;
+            }
+        }
+    }
+    // for(int i = 0; i < 11; ++i)
+    //     cout << minfactor[i] << " ";
+    // cout << endl;
+}
+
+void markPrimes(ll val, bool firstVisit) {
+    while(val > 1) {
+        ++cur[minfactor[val]];
+        if(firstVisit)
+            existing[minfactor[val]] = cur[minfactor[val]];
+        val /= minfactor[val];
+    }
+}
+
+void minimizeExisting() {
+    for(auto x: existing) {
+        if(cur.find(x.ff) == cur.end())
+            existing[x.ff] = 0;
+        existing[x.ff] = min(existing[x.ff], cur[x.ff]);
+    }
+}
+
+void clearCur() {
+    cur.clear();
+}
+
+void solve() {
+    ll n;
+    cin >> n;
+    for(ll i = 0; i < n; ++i) {
+        ll m;
+        cin >> m;
+        for(ll j = 0; j < m; ++j) {
+            ll val;
+            cin >> val;
+            markPrimes(val, i==0);
+        }
+        if(i != 0) 
+            minimizeExisting();
+        clearCur();
+    }
+    ll ans = 1;
+    // trace3(existing[2], existing[3], existing[5]);
+    for(auto i: existing) {
+        if(existing[i.ff] > 0) {
+            ans = ans * modexp(i.ff, existing[i.ff], mod);
+            ans %= mod;
+        }
+    }
+    if(ans < 0)
+        ans += mod;
+    cout << ans << endl;
+}
