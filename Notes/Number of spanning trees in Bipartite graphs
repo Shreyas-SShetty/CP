@@ -1,0 +1,3 @@
+N - number of vertices
+
+Number of spanning trees - summation over all 'X' from '1' to 'n-1' (X^(Y-1) * Y^(X-1)). X+Y = n.
