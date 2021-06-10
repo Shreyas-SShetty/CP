@@ -1,0 +1,8 @@
+Find sum of all factors of a number - (Efficient approach)
+
+
+for (int i = 1; i < N; i++) {
+    for (int j = i; j < N; j += i) {
+        ans[j] += i;
+    }
+}
