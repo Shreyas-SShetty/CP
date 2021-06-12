@@ -1,4 +1,4 @@
-Problem - https://www.spoj.com/problems/DQUERY/
+/*Problem - https://www.spoj.com/problems/DQUERY/
 
 Idea - This time using binary indexed tree.
        Sort queries according to 'r'.
@@ -7,6 +7,7 @@ Idea - This time using binary indexed tree.
        If that number is visited twice delete the last occurence and update the current occurence.
 
 Code - https://ideone.com/1OOG8r
+*/
 
 class Fentree {
 private:
