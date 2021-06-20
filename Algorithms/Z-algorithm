@@ -1,0 +1,24 @@
+Image - https://ibb.co/zFqNv6v
+
+Idea - Avoid computing already computed indices. Keep 'L' and 'R' to maintain the largest segment to the right which has been computed.
+       For current index 'i', if i < R then z[i] = min(z[i-L], r - i + 1).
+       z[i] = z[i-L] works because -- > s[i - L] = s[0] (as range is [L, R]) , s[i - L + 1] = s[1] and s[i + 1] = s[i - L + 1] so s[i + 1] = s[1] 
+       and so on which is nothing but computing z[i]. 
+       
+Code - 
+
+vector<int> z_function(string s) {
+    int n = (int) s.length();
+    vector<int> z(n);
+    for (int i = 1, l = 0, r = 0; i < n; ++i) {
+        if (i <= r)
+            z[i] = min (r - i + 1, z[i - l]);
+        while (i + z[i] < n && s[z[i]] == s[i + z[i]])
+            ++z[i];
+        if (i + z[i] - 1 > r)
+            l = i, r = i + z[i] - 1;
+    }
+    return z;
+}
+
+Time complexity : O(N) , R moves from 0 to N only once.
