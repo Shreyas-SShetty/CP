@@ -5,7 +5,7 @@ Answer lies in between minimum and maximum height
 For some optimum height it will be least
 On either side, it increases
 We can find minima using ternary search
-/*
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
