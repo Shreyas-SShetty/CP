@@ -1,0 +1,41 @@
+// GCD of ranges
+
+int query(int l, int h, int i, int j, int p, int n) {
+    if(i>h or j<l) {
+        return 0;
+    }
+    if(i>=l and j<=h) {
+        return seg[p];
+    }
+    int m = (i + j) >> 1;
+    return __gcd(query(l, h, i, m, 2*p+1, n), query(l, h, m+1, j, 2*p+2, n));
+}
+
+// point update
+void upd(int i, int j, int loc, int val, int p, int n) {
+    if(i > j) return;
+    if(i == j) {
+        seg[p] = a[i] = val;
+        return;
+    }
+    int m = (i + j) >> 1;
+    if(loc <= m) {
+        upd(i, m, loc, val, 2*p+1, n);
+    }
+    else {
+        upd(m+1, j, loc, val, 2*p+2, n);
+    }
+    seg[p] = __gcd(seg[2*p+1], seg[2*p+2]);
+}
+
+void build(int i, int j, int p, int n) {
+    if(i > j) return;
+    if(i == j) {
+        seg[p] = a[i];
+        return;
+    }
+    int m = (i + j) >> 1;
+    build(i, m, 2*p+1, n);
+    build(m+1, j, 2*p+2, n);
+    seg[p] = __gcd(seg[2*p+1], seg[2*p+2]);
+}
