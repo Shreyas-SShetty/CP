@@ -1,4 +1,5 @@
-// GCD of ranges
+// GCD of ranges - currently
+// Modify for other purposes
 
 int query(int l, int h, int i, int j, int p, int n) {
     if(i>h or j<l) {
