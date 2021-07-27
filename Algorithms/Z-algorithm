@@ -22,3 +22,6 @@ vector<int> z_function(string s) {
 }
 
 Time complexity : O(N) , R moves from 0 to N only once.
+
+
+Practice problem - https://cses.fi/problemset/task/1733/
