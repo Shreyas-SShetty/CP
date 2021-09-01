@@ -1,3 +1,2 @@
 # Code for CP problems
-Competitive programming
-
+Problem tasks and solutions to cool DSA concepts and algorithms.
