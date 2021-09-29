@@ -1,0 +1,16 @@
+void compress(vt<int>& a, int n) {
+    vt<int> b = a;
+    sort(b.begin(), b.end());
+    map<int, int> rank;
+    int current = 1;
+    rank[b[0]] = 1;
+    for(int i = 1; i < n; ++i) {
+        if(b[i-1] != b[i]) {
+            ++current;
+        }
+        rank[b[i]] = current;
+    }
+    for(int i = 0; i < n; ++i) {
+        a[i] = rank[a[i]];
+    }
+}
