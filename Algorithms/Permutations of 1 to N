@@ -1,0 +1,23 @@
+Find all permutations of numbers from 1 to n.
+
+
+void findPerms(int n, int mask, int taken = 0) {
+    if(taken == n) {
+        allPerms.push_back(Perm);
+        return;
+    }
+    for(int i = 0; i < n; ++i) {
+        if(!(mask & (1 << i))) {
+            Perm.push_back(i + 1);
+            findPerms(n, mask | (1 << i), taken + 1);
+            Perm.pop_back();
+        }
+    }
+}
+
+
+OR 
+
+do {
+  // code
+} while (next_permutation(begin(p), end(p)));
