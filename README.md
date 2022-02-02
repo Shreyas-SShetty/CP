@@ -1,2 +1,2 @@
 # Code for CP problems
-Problem tasks and solutions to cool DSA concepts and algorithms.
+Problem tasks and solutions related to CP. 
