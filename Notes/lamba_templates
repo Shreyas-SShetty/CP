@@ -1,0 +1,7 @@
+1) function<bool(int, int, int, int, int)> f = [&](int i, int p1, int p2, int p3, int p4) -> bool {
+   ...
+   };
+   
+2) auto f = [&](int i, int p1, int p2, int p3, int p4, auto& f) -> bool {
+   ...
+   };
