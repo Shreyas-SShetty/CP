@@ -95,7 +95,7 @@ int mergeit(int l, int m, int h, int* a, int n){
     int temp[sz];
     int first = l;
     int second = m;
-    int start = l;
+    int start = 0;
     while(first<m && second<=h){
         if(a[first] <= a[second]){
             temp[start++] = a[first++];
@@ -112,7 +112,7 @@ int mergeit(int l, int m, int h, int* a, int n){
         temp[start++] = a[second++];
     }
     for(int i=l; i<=h; ++i)
-        a[i] = temp[i];
+        a[i] = temp[i - l];
     return inv_cnt;
 }
 
