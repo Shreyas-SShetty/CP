@@ -11,7 +11,7 @@ If we currently meet a node and if that node is not previously present in the pq
 
 Disadvantages-
 It is similar to bfs in the sense once all the neighbours are pushed into the queue and sorted and pushed out then it assumes that adding any further weights will not change the minimal path.
-But their could be a negative edge in the next level which gives the least cost as well.
+But their could be a negative edge in the next level which gives the least cost as well, but is blocked from getting into queue because of a preceeding high weight edge. 
 
 Time Complexity - 
 O(Elog(V)) .Going through and pushing all the vertices and sorting them.
